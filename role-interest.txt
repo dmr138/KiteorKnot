@@ -1,0 +1,1 @@
+Interested in gaining backend development experience and learning about full-stack development. I've made commmand-line syle applications in java and python mostly using functions and taking input from the user and using that to produce some type of output. I've made 2-3 static websites using HTML and CSS. I've experimented with django but no tangible projects using it.
