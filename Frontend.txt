@@ -1,0 +1,2 @@
+Frontend
+I hope to learn how to utilize react appropriately and utilize api to show data such as wind speed and directions for our users. I look forward to diving into the backend as well so I can see what it's like to develop an application in it's entirety.  
