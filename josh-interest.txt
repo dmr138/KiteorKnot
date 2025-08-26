@@ -1,0 +1,4 @@
+My role is backend, but we have not yet decided on which framework we will be using, such as Django or NodeJS, depending on the language
+the group is most comfortable with. As far as databases go, we have settled on using SQL, but have not decided if it will be MySQL,
+PostgreSQL, or some other variant. As most of our group is largely inexperienced with creating full stack projects, I am still hoping
+that I will still gain some experience in developing a user interface.
