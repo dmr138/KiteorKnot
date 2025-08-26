@@ -1,8 +1,0 @@
-Joshua Sosa
-My role is backend, and I am currently looking into which frameworks we could use for
-the backend, such as Django or NodeJS depending on what languages our group is more
-comforable with. We will be using SQL for our databases, but I am not yet certain if 
-we will be using PostgreSQL, MySQL, or some other alternative. Additionally, as our
-group is largely inexperienced with creating full stack projects, I am hoping that
-I can also develop skills surrounding the use of developing a front end interface.
-
