@@ -11,6 +11,12 @@
     "lint": "expo lint"
   },
   "dependencies": {
+    "@expo-google-fonts/indie-flower": "^0.4.0",
+    "@expo-google-fonts/lobster": "^0.4.0",
+    "@expo-google-fonts/miniver": "^0.4.0",
+    "@expo-google-fonts/pacifico": "^0.4.0",
+    "@expo-google-fonts/roboto": "^0.4.0",
+    "@expo-google-fonts/waterfall": "^0.4.1",
     "@expo/vector-icons": "^14.1.0",
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/elements": "^2.3.8",
@@ -41,9 +47,9 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.0.10",
-    "typescript": "~5.8.3",
     "eslint": "^9.25.0",
-    "eslint-config-expo": "~9.2.0"
+    "eslint-config-expo": "~9.2.0",
+    "typescript": "~5.8.3"
   },
   "private": true
 }
