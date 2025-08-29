@@ -2,18 +2,15 @@ import { useRouter } from 'expo-router';
 import { Button, ImageBackground, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 
 
-export default function Index() {
+export default function SignUp() {
     const router = useRouter();
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        
-            <ImageBackground style={styles.kite} source={require('../assets/images/kiteLogin.jpg')} resizeMode="cover">
-
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <View style={styles.headerContainer}>
-                        <Text style={styles.header}>Kite or Knot</Text>
-                    </View>
-                </TouchableWithoutFeedback>
+            <ImageBackground
+                style={styles.kite}
+                source={require('../assets/images/kiteLogin.jpg')}
+                resizeMode="cover"
+            >
 
 
                 <KeyboardAvoidingView
@@ -23,6 +20,18 @@ export default function Index() {
 
                     <View style={styles.inner}>
 
+
+                        <View>
+                            <Text style={styles.header}>Sign-Up</Text>
+                        </View>
+
+                        <TextInput
+                            placeholder="First Name"
+                            style={styles.textInput}></TextInput>
+                        <TextInput
+                            placeholder="Last Name"
+                            style={styles.textInput}></TextInput>
+
                         <TextInput
                             placeholder="Username"
                             style={styles.textInput}></TextInput>
@@ -30,24 +39,14 @@ export default function Index() {
                         <TextInput
                             placeholder="Password"
                             style={styles.textInput}></TextInput>
-
-                        <View style={styles.loginbtnContainer} >
-                            <Button
-                                title="Login"
-                                onPress={() => null}
-                            //color="#027600ff"
-                            />
-                        </View>
-
-                        <View >
-                            <Text style={styles.partition}> or </Text>
-                        </View>
-
+                        <TextInput
+                            placeholder="Confirm Password"
+                            style={styles.textInput}></TextInput>
 
                         <View style={styles.signupbtnContainer} >
                             <Button
-                                title="Create Account"
-                                onPress={() => router.push('/SignUp')}
+                                title="Submit"
+                                onPress={() => null}
                                 color="#027600ff"
                             />
                         </View>
@@ -81,33 +80,21 @@ const styles = StyleSheet.create({
         //fontFamily: "Pacifico_400Regular",
         marginBottom: 0,
         marginTop: 40,
-        //justifyContent: 'center',
+        justifyContent: 'center',
         alignItems: 'center',
     },
 
-    headerContainer: {
-        alignItems: 'center',
-        marginTop: 50,
-    },
 
     textInput: {
+            borderWidth: 1,
+            borderRadius: 10,
+            width: 250,
+            marginTop: 10,
+            backgroundColor: 'white',
         ...Platform.select({
             ios: {
                 // iOS specific styles
-                borderWidth: 1,
-                borderRadius: 10,
                 height: 35,
-                width: 250,
-                marginTop: 10,
-                backgroundColor: 'white',
-            },
-            android: {
-                // Android specific styles
-                borderWidth: 1,
-                borderRadius: 10,
-                width: 250,
-                marginTop: 10,
-                backgroundColor: 'white',
             },
         }),
     },
