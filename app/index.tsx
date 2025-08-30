@@ -24,7 +24,7 @@ export default function Index() {
                     <View style={styles.inner}>
 
                         <TextInput
-                            placeholder="Username"
+                            placeholder="Email"
                             style={styles.textInput}></TextInput>
 
                         <TextInput
@@ -47,7 +47,7 @@ export default function Index() {
                         <View style={styles.signupbtnContainer} >
                             <Button
                                 title="Create Account"
-                                onPress={() => router.push('/SignUp')}
+                                onPress={() => router.push('/signup')}
                                 color="#027600ff"
                             />
                         </View>

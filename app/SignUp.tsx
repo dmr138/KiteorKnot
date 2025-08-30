@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Button, ImageBackground, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 
 
@@ -9,8 +9,7 @@ export default function SignUp() {
             <ImageBackground
                 style={styles.kite}
                 source={require('../assets/images/kiteLogin.jpg')}
-                resizeMode="cover"
-            >
+                resizeMode="cover">
 
 
                 <KeyboardAvoidingView
@@ -26,14 +25,7 @@ export default function SignUp() {
                         </View>
 
                         <TextInput
-                            placeholder="First Name"
-                            style={styles.textInput}></TextInput>
-                        <TextInput
-                            placeholder="Last Name"
-                            style={styles.textInput}></TextInput>
-
-                        <TextInput
-                            placeholder="Username"
+                            placeholder="Email@address.com"
                             style={styles.textInput}></TextInput>
 
                         <TextInput
@@ -47,8 +39,14 @@ export default function SignUp() {
                             <Button
                                 title="Submit"
                                 onPress={() => null}
-                                color="#027600ff"
-                            />
+                                color="#027600ff" />
+                        </View>
+
+                        <View style={styles.linkContainer}>
+                            <Text>Already have an account? </Text>
+                            <Link href="/" style={styles.link}>
+                                Log In
+                            </Link>
                         </View>
 
                     </View>
@@ -63,6 +61,16 @@ export default function SignUp() {
 }
 
 const styles = StyleSheet.create({
+
+    linkContainer: {
+        flexDirection: 'row',
+        marginTop: 20,
+        justifyContent: 'center',
+    },
+    link: {
+        color: '#007AFF', // A standard blue link color
+        fontWeight: 'bold',
+    },
 
     container: {
         flex: 1,
@@ -86,11 +94,11 @@ const styles = StyleSheet.create({
 
 
     textInput: {
-            borderWidth: 1,
-            borderRadius: 10,
-            width: 250,
-            marginTop: 10,
-            backgroundColor: 'white',
+        borderWidth: 1,
+        borderRadius: 10,
+        width: 250,
+        marginTop: 10,
+        backgroundColor: 'white',
         ...Platform.select({
             ios: {
                 // iOS specific styles
@@ -98,22 +106,6 @@ const styles = StyleSheet.create({
             },
         }),
     },
-
-
-    loginbtnContainer: {
-        borderRadius: 10,
-        alignSelf: 'center',
-        marginTop: 10,
-        width: 240,
-        ...Platform.select({
-            ios: {
-                // iOS specific styles
-                backgroundColor: '#e0e0e0ff',
-            },
-        }),
-    },
-
-
     signupbtnContainer: {
         borderRadius: 10,
         alignSelf: 'center',
