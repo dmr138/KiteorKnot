@@ -1,48 +1,45 @@
 import { useRouter } from 'expo-router';
-import { Button, ImageBackground, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
+import { Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 
 
 export default function Index() {
     const router = useRouter();
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        
-            <ImageBackground style={styles.kite} source={require('../assets/images/kiteLogin.jpg')} resizeMode="cover">
+            <View style={styles.outerContainer}>
 
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <View style={styles.headerContainer}>
-                        <Text style={styles.header}>Kite or Knot</Text>
-                    </View>
-                </TouchableWithoutFeedback>
+                <View style={styles.headerContainer}>
+                    <Text style={styles.header}>Kite or Knot</Text>
+                </View>
 
 
                 <KeyboardAvoidingView
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                     style={styles.container}>
 
-
                     <View style={styles.inner}>
-
                         <TextInput
-                            placeholder="Email"
-                            style={styles.textInput}></TextInput>
 
+                            placeholder="Email"
+                            style={styles.textInput}
+                            autoCapitalize='none'
+                        />
                         <TextInput
                             placeholder="Password"
-                            style={styles.textInput}></TextInput>
+                            style={styles.textInput}
+                            secureTextEntry={true}
+                            autoCapitalize='none'
+                        />
 
                         <View style={styles.loginbtnContainer} >
                             <Button
-                                title="Login"
-                                onPress={() => null}
-                            //color="#027600ff"
+                                title={"Login"}
+                                onPress={() => router.push('/(tabs)')}
+
                             />
                         </View>
 
-                        <View >
-                            <Text style={styles.partition}> or </Text>
-                        </View>
-
+                        <Text style={styles.partition}> or </Text>
 
                         <View style={styles.signupbtnContainer} >
                             <Button
@@ -54,46 +51,43 @@ export default function Index() {
 
                     </View>
 
-
                 </KeyboardAvoidingView>
-
-            </ImageBackground>
+            </View>
         </TouchableWithoutFeedback>
     );
-
 }
 
 const styles = StyleSheet.create({
-
+    outerContainer: {
+        flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+    },
     container: {
         flex: 1,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-
     inner: {
         marginBottom: 80,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
-
     header: {
         fontSize: 60,
-        //fontFamily: "Pacifico_400Regular",
         marginBottom: 0,
         marginTop: 40,
-        //justifyContent: 'center',
         alignItems: 'center',
     },
-
     headerContainer: {
         alignItems: 'center',
         marginTop: 50,
     },
-
     textInput: {
         ...Platform.select({
             ios: {
-                // iOS specific styles
                 borderWidth: 1,
                 borderRadius: 10,
                 height: 35,
@@ -102,17 +96,27 @@ const styles = StyleSheet.create({
                 backgroundColor: 'white',
             },
             android: {
-                // Android specific styles
                 borderWidth: 1,
                 borderRadius: 10,
                 width: 250,
                 marginTop: 10,
                 backgroundColor: 'white',
             },
+            web: {
+                borderWidth: 1,
+                borderRadius: 10,
+                height: 35,
+                width: 250,
+                marginTop: 10,
+                backgroundColor: 'white',
+                outline: 'none',
+                cursor: 'text',
+                paddingHorizontal: 10,
+
+                pointerEvents: 'auto',
+            }
         }),
     },
-
-
     loginbtnContainer: {
         borderRadius: 10,
         alignSelf: 'center',
@@ -120,36 +124,23 @@ const styles = StyleSheet.create({
         width: 240,
         ...Platform.select({
             ios: {
-                // iOS specific styles
                 backgroundColor: '#e0e0e0ff',
             },
         }),
     },
-
-
     signupbtnContainer: {
         borderRadius: 10,
         alignSelf: 'center',
         marginTop: 10,
         width: 220,
-
         ...Platform.select({
             ios: {
-                // iOS specific styles
                 backgroundColor: '#e0e0e0ff',
             },
         }),
     },
-
-    kite: {
-        flex: 1,
-    },
-
     partition: {
-        // marginTop: 5,
-        // marginBottom: 5,
         fontSize: 30,
         color: '#444444ff',
     },
-})
-
+});

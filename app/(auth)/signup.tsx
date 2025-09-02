@@ -1,16 +1,12 @@
-import { Link, useRouter } from 'expo-router';
-import { Button, ImageBackground, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
+import { useRouter } from 'expo-router';
+import { Button, Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 
 
 export default function SignUp() {
     const router = useRouter();
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ImageBackground
-                style={styles.kite}
-                source={require('../assets/images/kiteLogin.jpg')}
-                resizeMode="cover">
-
+         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.outerContainer}>
 
                 <KeyboardAvoidingView
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -25,28 +21,39 @@ export default function SignUp() {
                         </View>
 
                         <TextInput
+                            
                             placeholder="Email@address.com"
-                            style={styles.textInput}></TextInput>
-
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                        />
                         <TextInput
+                            
                             placeholder="Password"
-                            style={styles.textInput}></TextInput>
+                            style={styles.textInput}
+                            secureTextEntry={true}
+                            autoCapitalize='none'
+                        />
                         <TextInput
+                            
                             placeholder="Confirm Password"
-                            style={styles.textInput}></TextInput>
+                            style={styles.textInput}
+                            secureTextEntry={true}
+                            autoCapitalize='none'
+
+                        />
 
                         <View style={styles.signupbtnContainer} >
                             <Button
-                                title="Submit"
-                                onPress={() => null}
-                                color="#027600ff" />
+                                title={"Submit"}
+                                color="#027600ff"
+                            />
                         </View>
 
                         <View style={styles.linkContainer}>
                             <Text>Already have an account? </Text>
-                            <Link href="/" style={styles.link}>
-                                Log In
-                            </Link>
+                            <Pressable onPress={() => router.push('/')}>
+                                <Text style={styles.link}>Log In</Text>
+                            </Pressable>
                         </View>
 
                     </View>
@@ -54,26 +61,33 @@ export default function SignUp() {
 
                 </KeyboardAvoidingView>
 
-            </ImageBackground>
+            </View>
         </TouchableWithoutFeedback>
     );
 
 }
 
 const styles = StyleSheet.create({
-
+    outerContainer: {
+        flex: 1,
+    },
     linkContainer: {
         flexDirection: 'row',
         marginTop: 20,
         justifyContent: 'center',
+        alignItems: 'center',
     },
     link: {
         color: '#007AFF', // A standard blue link color
         fontWeight: 'bold',
+        fontSize: 16,
     },
 
     container: {
         flex: 1,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     inner: {
@@ -119,11 +133,7 @@ const styles = StyleSheet.create({
             },
         }),
     },
-
-    kite: {
-        flex: 1,
-    },
-
+    
     partition: {
         // marginTop: 5,
         // marginBottom: 5,
@@ -131,4 +141,3 @@ const styles = StyleSheet.create({
         color: '#444444ff',
     },
 })
-
