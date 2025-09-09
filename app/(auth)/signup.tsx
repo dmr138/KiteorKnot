@@ -1,11 +1,36 @@
+import { supabase } from '@/utils/supabase';
 import { useRouter } from 'expo-router';
-import { Button, Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
+import { useState } from 'react';
+import { Alert, Button, Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 
 
 export default function SignUp() {
     const router = useRouter();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleSignUp = async () => {
+        if (password !== confirmPassword) {
+            Alert.alert("Passwords must match!");
+            return;
+        }
+        setLoading(true)
+        const { error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+        });
+        setLoading(false);
+
+        if (error) {
+            Alert.alert(error.message);
+        } else {
+            Alert.alert("Account created successfully! Check your email to confirm.");
+        }
+    };
     return (
-         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.outerContainer}>
 
                 <KeyboardAvoidingView
@@ -21,30 +46,38 @@ export default function SignUp() {
                         </View>
 
                         <TextInput
-                            
+
                             placeholder="Email@address.com"
                             style={styles.textInput}
                             autoCapitalize="none"
+                            onChangeText={setEmail}
+                            value={email}
                         />
                         <TextInput
-                            
+
                             placeholder="Password"
                             style={styles.textInput}
                             secureTextEntry={true}
                             autoCapitalize='none'
+                            onChangeText={setPassword}
+                            value={password}
                         />
                         <TextInput
-                            
+
                             placeholder="Confirm Password"
                             style={styles.textInput}
                             secureTextEntry={true}
                             autoCapitalize='none'
+                            onChangeText={setConfirmPassword}
+                            value={confirmPassword}
 
                         />
 
                         <View style={styles.signupbtnContainer} >
                             <Button
-                                title={"Submit"}
+                                title={loading ? "Loading..." : "Submit"}
+                                onPress={handleSignUp}
+                                disabled={loading}
                                 color="#027600ff"
                             />
                         </View>
@@ -78,7 +111,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     link: {
-        color: '#007AFF', // A standard blue link color
+        color: '#007AFF',
         fontWeight: 'bold',
         fontSize: 16,
     },
@@ -133,7 +166,7 @@ const styles = StyleSheet.create({
             },
         }),
     },
-    
+
     partition: {
         // marginTop: 5,
         // marginBottom: 5,

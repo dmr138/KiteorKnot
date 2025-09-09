@@ -1,9 +1,28 @@
+import { supabase } from '@/utils/supabase';
 import { useRouter } from 'expo-router';
-import { Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
-
+import { useState } from 'react';
+import { Alert, Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 
 export default function Index() {
     const router = useRouter();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+
+    const handleLogin = async () => {
+        setLoading(true);
+        const { error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        })
+        setLoading(false);
+
+        if (error) {
+            Alert.alert(error.message);
+        }
+    }
+
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.outerContainer}>
@@ -19,22 +38,26 @@ export default function Index() {
 
                     <View style={styles.inner}>
                         <TextInput
-
                             placeholder="Email"
                             style={styles.textInput}
                             autoCapitalize='none'
+                            onChangeText={setEmail}
+                            value={email}
                         />
                         <TextInput
                             placeholder="Password"
                             style={styles.textInput}
                             secureTextEntry={true}
                             autoCapitalize='none'
+                            onChangeText={setPassword}
+                            value={password}
                         />
 
                         <View style={styles.loginbtnContainer} >
                             <Button
-                                title={"Login"}
-                                onPress={() => router.push('/(tabs)')}
+                                title={loading ? "Loading..." : "Login"}
+                                onPress={(handleLogin)}
+                                disabled={loading}
 
                             />
                         </View>
