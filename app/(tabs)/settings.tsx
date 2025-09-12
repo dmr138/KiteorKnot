@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Text, View } from '@/components/Themed';
 
 export default function SettingsScreen() {
   return (

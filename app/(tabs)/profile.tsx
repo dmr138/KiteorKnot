@@ -1,7 +1,8 @@
 
+import { Text, View } from '@/components/Themed';
 import { useAuth } from '@/context/AuthProvider';
 import { useRouter } from 'expo-router';
-import { Button, Text, View } from 'react-native';
+import { Button } from 'react-native';
 
 
 export default function ProfileScreen() {

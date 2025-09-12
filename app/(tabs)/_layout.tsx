@@ -1,20 +1,15 @@
+import { useColorScheme } from '@/components/useColorScheme';
+import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import { useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 
 export default function TabLayout() {
-  // const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme();
   
   // Conditionally select the light or dark theme palette
-  //const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
+  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
   
-  //function to call for a button for users to manually switch instead, defaults to light mode
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-  const theme = isDarkTheme ? darkTheme : lightTheme;
-  const toggleTheme = () => {
-    setIsDarkTheme(current => !current);
-  };
 
 
 
@@ -28,8 +23,8 @@ export default function TabLayout() {
         tabBarActiveTintColor: theme.tabActiveTint,
         tabBarInactiveTintColor: theme.tabInactiveTint,
         headerRight: () => (
-          <Pressable onPress={toggleTheme} style={styles.headerRightContainer}>
-            <Ionicons name={isDarkTheme ? "moon" : "sunny"} size={24} color={theme.headerTint} />
+          <Pressable onPress={() => alert('Information menu pressed!')} style={styles.headerRightContainer}>
+            <Ionicons name="settings" size={24} color={theme.headerTint} />
           </Pressable>
         ),
       }}
@@ -68,21 +63,6 @@ export default function TabLayout() {
   );
 }
 
-const lightTheme = {
-  header: { backgroundColor: '#e1e1e1ff', height: 90 },
-  headerTint: '#006db6ff',
-  tabBar: { backgroundColor: '#e1e1e1ff' },
-  tabActiveTint: '#006db6ff',
-  tabInactiveTint: '#666',
-};
-
-const darkTheme = {
-  header: { backgroundColor: '#4b4b4bff', height: 90 },
-  headerTint: '#006db6ff',
-  tabBar: { backgroundColor: '#4b4b4bff' },
-  tabActiveTint: '#006db6ff',
-  tabInactiveTint: 'gray',
-};
 
 const styles = StyleSheet.create({
   headerTitle: {
