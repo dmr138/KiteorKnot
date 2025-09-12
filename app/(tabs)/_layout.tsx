@@ -16,10 +16,10 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerStyle: {...theme.header, height: 90},
+        headerStyle: { backgroundColor: theme.header, height: 90 },
         headerTintColor: theme.headerTint,
         headerTitleStyle: styles.headerTitle,
-        tabBarStyle: theme.tabBar,
+        tabBarStyle: { backgroundColor: theme.tabBar }, 
         tabBarActiveTintColor: theme.tabActiveTint,
         tabBarInactiveTintColor: theme.tabInactiveTint,
         headerRight: () => (
