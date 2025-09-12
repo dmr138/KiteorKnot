@@ -2,7 +2,7 @@ import { Stack } from 'expo-router';
 import { Image, Platform, StyleSheet, View } from 'react-native';
 
 export default function AuthLayout() {
-  const isAndroid = Platform.OS === 'android';
+  const isios = Platform.OS === 'ios';
   
   return (
     <View style={styles.container}>
@@ -17,8 +17,8 @@ export default function AuthLayout() {
           contentStyle: { backgroundColor: 'transparent' },
         }}
       >
-        <Stack.Screen name="index" options={{ animation: 'slide_from_left' }}   />
-        <Stack.Screen name="signup" options={{ animation: 'slide_from_right' }}  />
+        <Stack.Screen name="index" options={{ animation: isios ? 'fade_from_bottom': 'slide_from_left' }}   />
+        <Stack.Screen name="signup" options={{ animation: isios ? 'fade_from_bottom': 'slide_from_right' }}  />
       </Stack>
     </View>
   );

@@ -16,15 +16,15 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerStyle: theme.header,
+        headerStyle: {...theme.header, height: 90},
         headerTintColor: theme.headerTint,
         headerTitleStyle: styles.headerTitle,
         tabBarStyle: theme.tabBar,
         tabBarActiveTintColor: theme.tabActiveTint,
         tabBarInactiveTintColor: theme.tabInactiveTint,
         headerRight: () => (
-          <Pressable onPress={() => alert('Information menu pressed!')} style={styles.headerRightContainer}>
-            <Ionicons name="settings" size={24} color={theme.headerTint} />
+          <Pressable onPress={() => alert('Settings button pressed!')} style={styles.headerRightContainer}>
+            <Ionicons name="settings-outline" size={24} color={theme.headerTint} />
           </Pressable>
         ),
       }}
