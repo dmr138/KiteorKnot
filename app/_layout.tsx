@@ -14,7 +14,7 @@ function RootLayoutNav() {
     if (!initialized) return;
 
     if (session && inAuthGroup) {
-      router.replace('/(tabs)');
+      router.replace('/(tabs)/home');
     } else if (!session && !inAuthGroup) {
       router.replace('/(auth)');
     }
