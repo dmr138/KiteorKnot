@@ -2,7 +2,7 @@ import markers from '@/assets/markers.json';
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <View style={styles.container}>
       <MapView
