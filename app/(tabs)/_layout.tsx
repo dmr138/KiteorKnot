@@ -3,7 +3,7 @@ import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { Tabs, useRouter } from 'expo-router';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, } from 'react-native';
 
 export default function TabLayout() {
   const router = useRouter();
@@ -22,7 +22,10 @@ export default function TabLayout() {
         tabBarInactiveTintColor: theme.tabInactiveTint,
         headerRight: () => (
           <Pressable
-            onPress={() => alert('Settings button pressed!')}
+            
+          onPress={() => alert('Settings button pressed!')}
+            
+            
             onLongPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
               router.push('/game');
