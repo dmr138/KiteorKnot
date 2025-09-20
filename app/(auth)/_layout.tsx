@@ -17,8 +17,8 @@ export default function AuthLayout() {
           contentStyle: { backgroundColor: 'transparent' },
         }}
       >
-        <Stack.Screen name="index" options={{ animation: isios ? 'fade_from_bottom': 'slide_from_left' }}   />
-        <Stack.Screen name="signup" options={{ animation: isios ? 'fade_from_bottom': 'slide_from_right' }}  />
+        <Stack.Screen name="index" options={{ animation: isios ? 'none': 'slide_from_left' }}   />
+        <Stack.Screen name="signup" options={{ animation: isios ? 'none': 'slide_from_right' }}  />
       </Stack>
     </View>
   );

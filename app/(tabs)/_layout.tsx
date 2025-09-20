@@ -1,16 +1,14 @@
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import * as Haptics from 'expo-haptics';
+import { Tabs, useRouter } from 'expo-router';
 import { Pressable, StyleSheet } from 'react-native';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  
-  // Conditionally select the light or dark theme palette
+  const router = useRouter();
+  const colorScheme = useColorScheme(); //grabs the phones theme
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
-  
-
 
 
   return (
@@ -19,11 +17,17 @@ export default function TabLayout() {
         headerStyle: { backgroundColor: theme.header, height: 90 },
         headerTintColor: theme.headerTint,
         headerTitleStyle: styles.headerTitle,
-        tabBarStyle: { backgroundColor: theme.tabBar }, 
+        tabBarStyle: { backgroundColor: theme.tabBar },
         tabBarActiveTintColor: theme.tabActiveTint,
         tabBarInactiveTintColor: theme.tabInactiveTint,
         headerRight: () => (
-          <Pressable onPress={() => alert('Settings button pressed!')} style={styles.headerRightContainer}>
+          <Pressable
+            onPress={() => alert('Settings button pressed!')}
+            onLongPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              router.push('/game');
+            }}
+            style={styles.headerRightContainer}>
             <Ionicons name="settings-outline" size={24} color={theme.headerTint} />
           </Pressable>
         ),
@@ -57,6 +61,14 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? "search" : "search-outline"} size={size} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="game"
+        options={{
+          href: null,
+          headerTitle: '',
+          title: 'Game',
         }}
       />
     </Tabs>
