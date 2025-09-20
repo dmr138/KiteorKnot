@@ -22,10 +22,10 @@ export default function TabLayout() {
         tabBarInactiveTintColor: theme.tabInactiveTint,
         headerRight: () => (
           <Pressable
-            
-          onPress={() => alert('Settings button pressed!')}
-            
-            
+
+            onPress={() => alert('Settings button pressed!')}
+
+
             onLongPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
               router.push('/game');
@@ -47,22 +47,22 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile"
-        options={{
-          headerTitle: '',
-          title: 'Profile',
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? "person-circle" : "person-circle-outline"} size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="settings"
         options={{
           headerTitle: '',
           title: 'Search',
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? "search" : "search-outline"} size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          headerTitle: '',
+          title: 'Profile',
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "person-circle" : "person-circle-outline"} size={size} color={color} />
           ),
         }}
       />
