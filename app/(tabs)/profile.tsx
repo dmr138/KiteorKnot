@@ -1,13 +1,17 @@
 
 import { Text, View } from '@/components/Themed';
 import { useAuth } from '@/context/AuthProvider';
+import { useState } from 'react';
 import { Alert, Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TextInput, TouchableWithoutFeedback } from "react-native";
+
 
 export default function ProfileScreen() {
   const { signOut, user } = useAuth();
-
+  const [weight, setWeight] = useState('');
+  const [loading, setLoading] = useState(false);
   //const { data, error } = await Supabase
   // supabase stuff will go here. upsert etc
+
 
 
 
@@ -16,15 +20,18 @@ export default function ProfileScreen() {
       <View style={[styles.outerContainer]}>
         <KeyboardAvoidingView>
           <View>
-            <Text style={[styles.welcomeText]}>
-              Hello {user?.email}
+            <Text 
+            style={[styles.welcomeText]}>
+              Hello {user?.email?.split('@')[0] || ''}
             </Text>
             <Text style={[styles.welcomeText]}>
               You are logged in!
             </Text>
             <Text style={[styles.instructionText]}>
-              Please enter your weight in the field below.{'\n'}{'\n'}
-              KiteorKnot will use this information and the current{'\n'}
+              Please enter your weight in the field below.
+              {'\n'}{'\n'}
+              KiteorKnot will use this information and the current
+              {'\n'}
               weather data to recomend a kite size
             </Text>
 
@@ -34,19 +41,35 @@ export default function ProfileScreen() {
               secureTextEntry={false}
               keyboardType={'numeric'}
               autoComplete='off'
-              autoCapitalize='none'
-              onChangeText={undefined}
+              value={weight}
+              onChangeText={setWeight}
             />
 
             <View style={styles.updatebtnContainer}>
-              <Button title="Update Weight" onPress={undefined} />
+              <Button
+                title={loading ? "Updating..." : "Update Weight"}
+                disabled={loading}
+                  onPress={() => {
+                    setLoading(true);
+                    const numericWeight = parseFloat(weight);
+
+                    if (isNaN(numericWeight) || numericWeight <= 0 || numericWeight > 350) {
+                      Alert.alert("Invalid Weight", "Please enter a weight between 1 and 350.");
+                      setLoading(false);
+                      return;
+                    }
+                    Alert.alert("Success", "Weight updated!");
+                    setLoading(false);
+                    }
+                  }
+              />
             </View>
-            
+
             <View style={styles.spacer} />
 
             <View style={styles.signoutbtnContainer}>
               <Button
-                title="Sign Out"
+                title="Log Out"
                 onPress={() => {
                   if (signOut) {
                     Alert.alert(
@@ -114,7 +137,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderWidth: 1,
     borderRadius: 10,
-    width: 250,
+    width: 210,
     marginTop: 10,
     backgroundColor: 'white',
     ...Platform.select({
