@@ -7,7 +7,7 @@ export default function AuthLayout() {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/images/kiteLogin.jpg')}
+        source={require('@/assets/images/kiteLogin.jpg')}
         style={styles.backgroundImage}
       />
       <Stack

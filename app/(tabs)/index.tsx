@@ -1,11 +1,13 @@
-import markers from '@/assets/markers.json';
+import data from '@/assets/weather.json';
+import SpotItem from '@/components/SpotItem';
+import React, { useState } from 'react';
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 
 
-
 export default function HomePage() {
+  const[selectedSpot, setSelectedSpot] = useState(null);
   return (
     <View style={styles.container}>
       <MapView
@@ -19,18 +21,21 @@ export default function HomePage() {
           longitudeDelta: 0.05,
         }}
       >
-        {markers.map((spot, index) => (
+        {data.spots.map((spot, index) => (
             <Marker
-            key={index}
+            onPress={() => setSelectedSpot(spot)}
+            key={spot.id}
             coordinate={spot.location}
             title={spot.name}
             description={spot.description}
-            >
-                
-                
+            
+            
+            >    
             </Marker>
+
   ))}
       </MapView>
+      {selectedSpot && <SpotItem spots={selectedSpot}/>}
     </View>
   );
 }

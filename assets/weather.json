@@ -1,0 +1,214 @@
+{
+  "forecastStartDate": "2025-09-24",
+  "forecastEndDate": "2025-09-27",
+  "spots": [
+    {
+      "name": "Fort Sumter",
+      "id": 1,
+      "location": { "latitude": 32.75018, "longitude": -79.880616 },
+      "description": "Popular kite spot with steady winds and scenic views.",
+      "forecast": [
+        {
+          "date": "2025-09-24",
+          "currentWindKts": 16,
+          "currentWindDir": "E",
+          "averageWindKts": 15.3,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 12, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 16, "windDir": "E" },
+            { "time": "16:00", "windSpeedKts": 18, "windDir": "ESE" }
+          ]
+        },
+        {
+          "date": "2025-09-25",
+          "currentWindKts": 15,
+          "currentWindDir": "ENE",
+          "averageWindKts": 14.0,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 10, "windDir": "NNE" },
+            { "time": "12:00", "windSpeedKts": 15, "windDir": "ENE" },
+            { "time": "16:00", "windSpeedKts": 17, "windDir": "E" }
+          ]
+        },
+        {
+          "date": "2025-09-26",
+          "currentWindKts": 13,
+          "currentWindDir": "E",
+          "averageWindKts": 12.3,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 9, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 13, "windDir": "E" },
+            { "time": "16:00", "windSpeedKts": 15, "windDir": "SE" }
+          ]
+        },
+        {
+          "date": "2025-09-27",
+          "currentWindKts": 17,
+          "currentWindDir": "ESE",
+          "averageWindKts": 15.7,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 11, "windDir": "ENE" },
+            { "time": "12:00", "windSpeedKts": 17, "windDir": "ESE" },
+            { "time": "16:00", "windSpeedKts": 19, "windDir": "SE" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Folly Beach North",
+      "id": 4,
+      "location": { "latitude": 32.681932, "longitude": -79.889082 },
+      "description": "Beginner-friendly beach break with consistent surf conditions.",
+      "forecast": [
+        {
+          "date": "2025-09-24",
+          "currentWindKts": 14,
+          "currentWindDir": "ENE",
+          "averageWindKts": 12.7,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 9, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 14, "windDir": "ENE" },
+            { "time": "16:00", "windSpeedKts": 15, "windDir": "E" }
+          ]
+        },
+        {
+          "date": "2025-09-25",
+          "currentWindKts": 12,
+          "currentWindDir": "ENE",
+          "averageWindKts": 11.3,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 8, "windDir": "NNE" },
+            { "time": "12:00", "windSpeedKts": 12, "windDir": "ENE" },
+            { "time": "16:00", "windSpeedKts": 14, "windDir": "E" }
+          ]
+        },
+        {
+          "date": "2025-09-26",
+          "currentWindKts": 15,
+          "currentWindDir": "E",
+          "averageWindKts": 13.7,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 10, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 15, "windDir": "E" },
+            { "time": "16:00", "windSpeedKts": 16, "windDir": "SE" }
+          ]
+        },
+        {
+          "date": "2025-09-27",
+          "currentWindKts": 14,
+          "currentWindDir": "E",
+          "averageWindKts": 14.0,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 11, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 14, "windDir": "E" },
+            { "time": "16:00", "windSpeedKts": 17, "windDir": "ESE" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Folly Beach South",
+      "id": 2,
+      "location": { "latitude": 32.643847, "longitude": -79.961934 },
+      "description": "Wide sandy beach, good for downwinders and open sessions.",
+      "forecast": [
+        {
+          "date": "2025-09-24",
+          "currentWindKts": 17,
+          "currentWindDir": "E",
+          "averageWindKts": 16.0,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 11, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 17, "windDir": "E" },
+            { "time": "16:00", "windSpeedKts": 20, "windDir": "ESE" }
+          ]
+        },
+        {
+          "date": "2025-09-25",
+          "currentWindKts": 15,
+          "currentWindDir": "E",
+          "averageWindKts": 14.0,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 9, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 15, "windDir": "E" },
+            { "time": "16:00", "windSpeedKts": 18, "windDir": "SE" }
+          ]
+        },
+        {
+          "date": "2025-09-26",
+          "currentWindKts": 14,
+          "currentWindDir": "E",
+          "averageWindKts": 13.3,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 10, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 14, "windDir": "E" },
+            { "time": "16:00", "windSpeedKts": 16, "windDir": "SE" }
+          ]
+        },
+        {
+          "date": "2025-09-27",
+          "currentWindKts": 18,
+          "currentWindDir": "E",
+          "averageWindKts": 17.0,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 12, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 18, "windDir": "E" },
+            { "time": "16:00", "windSpeedKts": 21, "windDir": "ESE" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sullivan's Island",
+      "id": 3,
+      "location": { "latitude": 32.766128, "longitude": -79.819977 },
+      "description": "Strong tidal currents, better for advanced riders.",
+      "forecast": [
+        {
+          "date": "2025-09-24",
+          "currentWindKts": 18,
+          "currentWindDir": "ENE",
+          "averageWindKts": 17.7,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 13, "windDir": "NNE" },
+            { "time": "12:00", "windSpeedKts": 18, "windDir": "ENE" },
+            { "time": "16:00", "windSpeedKts": 22, "windDir": "E" }
+          ]
+        },
+        {
+          "date": "2025-09-25",
+          "currentWindKts": 16,
+          "currentWindDir": "E",
+          "averageWindKts": 15.3,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 11, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 16, "windDir": "E" },
+            { "time": "16:00", "windSpeedKts": 19, "windDir": "ESE" }
+          ]
+        },
+        {
+          "date": "2025-09-26",
+          "currentWindKts": 17,
+          "currentWindDir": "E",
+          "averageWindKts": 16.3,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 12, "windDir": "NE" },
+            { "time": "12:00", "windSpeedKts": 17, "windDir": "E" },
+            { "time": "16:00", "windSpeedKts": 20, "windDir": "SE" }
+          ]
+        },
+        {
+          "date": "2025-09-27",
+          "currentWindKts": 19,
+          "currentWindDir": "ESE",
+          "averageWindKts": 18.7,
+          "times": [
+            { "time": "08:00", "windSpeedKts": 14, "windDir": "ENE" },
+            { "time": "12:00", "windSpeedKts": 19, "windDir": "ESE" },
+            { "time": "16:00", "windSpeedKts": 23, "windDir": "SE" }
+          ]
+        }
+      ]
+    }
+  ]
+}
