@@ -19,10 +19,10 @@ export default function DinoGame() {
       <WebView
         key={colorScheme}
         source={require('../assets/dino-game/index.html')}
-        style={styles.webview}
+        style={[styles.webview, { backgroundColor: colorScheme === 'dark' ? '#121212' : '#fff' }]}
         javaScriptEnabled={true}
         injectedJavaScript={invertScript}
-        scrollEnabled={false}
+        scrollEnabled={true}
       />
     </View>
   );
