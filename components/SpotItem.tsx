@@ -1,6 +1,7 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import kiteCalc from './kiteCalc';
+import { Text, View } from './Themed';
 
 
 const SpotItem = ({ spots }) => {
@@ -27,7 +28,7 @@ export default SpotItem
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: 'green',
+        //backgroundColor: 'green',
         position: 'absolute',
         bottom: 50,
         left: 10,

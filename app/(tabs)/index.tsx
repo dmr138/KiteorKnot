@@ -1,7 +1,8 @@
 import data from '@/assets/weather.json';
 import SpotItem from '@/components/SpotItem';
+import { View } from '@/components/Themed';
 import React, { useState } from 'react';
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 
