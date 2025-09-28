@@ -27,8 +27,8 @@ export default function HomePage() {
             onPress={() => setSelectedSpot(spot)}
             key={spot.id}
             coordinate={spot.location}
-            title={spot.name}
-            description={spot.description}
+            //title={spot.name}
+            //description={spot.description}
             
             
             >    

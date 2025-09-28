@@ -1,11 +1,36 @@
-import React from 'react';
+import { useAuth } from '@/context/AuthProvider';
+import { supabase } from '@/utils/supabase';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import kiteCalc from './kiteCalc';
 import { Text, View } from './Themed';
 
-
 const SpotItem = ({ spots }) => {
-    const userWeight = 80;
+    
+    const { signOut, user } = useAuth();
+    const [weight, setWeight] = useState('');
+    
+    useEffect(() => {
+            const getTheUsersWeight = async () => {
+              if (user?.id) {
+                const { data, error } = await supabase
+                  .from('profiles')
+                  .select('weight')
+                  .eq('id', user.id)
+                  //https://supabase.com/docs/reference/javascript/single
+                  .single();
+                
+    
+                if (error) {
+                  console.log('Error fetching weight:', error.message);
+                } else if (data) {
+                  setWeight(data.weight ? data.weight: '');
+                }
+              }
+            };
+            getTheUsersWeight();
+          }, [user?.id])
+    
     return (
 
     <View style={styles.card}>
@@ -16,7 +41,7 @@ const SpotItem = ({ spots }) => {
                 <Text style={styles.infoTxt}>{spots.forecast[0].currentWindKts}kts</Text>
                 <Text style={styles.infoTxt}>{spots.forecast[0].currentWindDir}</Text>
             </View>
-            <Text>{kiteCalc(userWeight, Number(spots.forecast[0].currentWindKts))}m </Text>
+            <Text>{kiteCalc(Number(weight), Number(spots.forecast[0].currentWindKts))}m </Text>
     
         </View>
 

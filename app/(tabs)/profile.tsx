@@ -1,17 +1,40 @@
 
 import { Text, View } from '@/components/Themed';
 import { useAuth } from '@/context/AuthProvider';
-import { useState } from 'react';
+import { supabase } from '@/utils/supabase';
+import { useEffect, useState } from 'react';
 import { Alert, Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TextInput, TouchableWithoutFeedback } from "react-native";
+
 
 
 export default function ProfileScreen() {
   const { signOut, user } = useAuth();
   const [weight, setWeight] = useState('');
   const [loading, setLoading] = useState(false);
-  //const { data, error } = await Supabase
-  // supabase stuff will go here. upsert etc
 
+
+
+      useEffect(() => {
+        const getTheUsersWeight = async () => {
+          if (user?.id) {
+            const { data, error } = await supabase
+              .from('profiles')
+              .select('weight')
+              .eq('id', user.id)
+              //https://supabase.com/docs/reference/javascript/single
+              .single();
+            
+
+            if (error) {
+              console.log('Error fetching weight:', error.message);
+            } else if (data) {
+              setWeight(data.weight ? data.weight.toString() : '');
+            }
+          }
+        };
+        getTheUsersWeight();
+      }, [user?.id])
+  
 
 
 
@@ -36,7 +59,7 @@ export default function ProfileScreen() {
             </Text>
 
             <TextInput
-              placeholder="Weight"
+              placeholder=""
               style={styles.textInput}
               secureTextEntry={false}
               keyboardType={'numeric'}
@@ -49,7 +72,7 @@ export default function ProfileScreen() {
               <Button
                 title={loading ? "Updating..." : "Update Weight"}
                 disabled={loading}
-                  onPress={() => {
+                  onPress={async () => {
                     setLoading(true);
                     const numericWeight = parseFloat(weight);
 
@@ -58,8 +81,24 @@ export default function ProfileScreen() {
                       setLoading(false);
                       return;
                     }
-                    Alert.alert("Success", "Weight updated!");
+
+
+                    const { data, error } = await supabase
+                      .from('profiles')
+                      .update({ weight: numericWeight })
+                      .eq('id', user?.id)
+                      .select()
+                              
+                    if (error) {
+                      Alert.alert("Error", error.message);
+                      setLoading(false);
+                    } 
+                    else {
+                     Alert.alert("Success", "Weight updated!");
+                     Keyboard.dismiss();
                     setLoading(false);
+                    }
+                    
                     }
                   }
               />
