@@ -1,10 +1,10 @@
 import data from '@/assets/weather.json';
 import SpotItem from '@/components/SpotItem';
 import { View } from '@/components/Themed';
+import { retroMapStyle } from '@/constants/mapStyles';
 import React, { useState } from 'react';
 import { StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
-
 
 
 export default function HomePage() {
@@ -13,7 +13,7 @@ export default function HomePage() {
     <View style={styles.container}>
       <MapView
         provider={PROVIDER_DEFAULT}     // don't force Google provider in Expo Go
-        
+        customMapStyle={retroMapStyle}
         style={styles.map}
         initialRegion={{
           latitude: 32.7765,       // Charleston
