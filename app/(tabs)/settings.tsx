@@ -1,4 +1,5 @@
 import { Text, View } from '@/components/Themed';
+import { useAuth } from '@/context/AuthProvider';
 import { supabase } from '@/utils/supabase';
 import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
@@ -6,6 +7,7 @@ import { Button, ScrollView } from 'react-native';
 
 export default function SettingsScreen() {
   const [result, setResult] = useState('Press button to fetch');
+  const { session } = useAuth();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -13,8 +15,18 @@ export default function SettingsScreen() {
         title="Call Edge Function"
         onPress={async () => {
           await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-          const { data } = await supabase.functions.invoke('smooth-api');
-          setResult(JSON.stringify(data, null, 2));
+          const { data, error } = await supabase.functions.invoke('smooth-api', {
+            headers: {
+              Authorization: `Bearer ${session?.access_token}`,
+            },
+          });
+
+          if (error) {
+            console.error(error);
+            setResult(`Error: ${error.message}`);
+          } else {
+            setResult(JSON.stringify(data, null, 2));
+          }
         }}
       />
 
