@@ -2,39 +2,41 @@
 import { Text, View } from '@/components/Themed';
 import { useAuth } from '@/context/AuthProvider';
 import { supabase } from '@/utils/supabase';
+import * as Haptics from 'expo-haptics';
+import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert, Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TextInput, TouchableWithoutFeedback } from "react-native";
-
 
 
 export default function ProfileScreen() {
   const { signOut, user } = useAuth();
   const [weight, setWeight] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
 
 
-      useEffect(() => {
-        const getTheUsersWeight = async () => {
-          if (user?.id) {
-            const { data, error } = await supabase
-              .from('profiles')
-              .select('weight')
-              .eq('id', user.id)
-              //https://supabase.com/docs/reference/javascript/single
-              .single();
-            
+  useEffect(() => {
+    const getTheUsersWeight = async () => {
+      if (user?.id) {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('weight')
+          .eq('id', user.id)
+          //https://supabase.com/docs/reference/javascript/single
+          .single();
 
-            if (error) {
-              console.log('Error fetching weight:', error.message);
-            } else if (data) {
-              setWeight(data.weight ? data.weight.toString() : '');
-            }
-          }
-        };
-        getTheUsersWeight();
-      }, [user?.id])
-  
+
+        if (error) {
+          console.log('Error fetching weight:', error.message);
+        } else if (data) {
+          setWeight(data.weight ? data.weight.toString() : '');
+        }
+      }
+    };
+    getTheUsersWeight();
+  }, [user?.id])
+
 
 
 
@@ -43,9 +45,17 @@ export default function ProfileScreen() {
       <View style={[styles.outerContainer]}>
         <KeyboardAvoidingView>
           <View>
-            <Text 
-            style={[styles.welcomeText]}>
-              Hello {user?.email?.split('@')[0] || ''}
+            <Text style={styles.welcomeText}>
+              Hello{' '}
+              <Text
+                style={styles.welcomeText}
+                onLongPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  router.push('/game');
+                }}
+              >
+                {user?.email?.split('@')[0] || ''}
+              </Text>
             </Text>
             <Text style={[styles.welcomeText]}>
               You are logged in!
@@ -72,35 +82,35 @@ export default function ProfileScreen() {
               <Button
                 title={loading ? "Updating..." : "Update Weight"}
                 disabled={loading}
-                  onPress={async () => {
-                    setLoading(true);
-                    const numericWeight = parseFloat(weight);
+                onPress={async () => {
+                  setLoading(true);
+                  const numericWeight = parseFloat(weight);
 
-                    if (isNaN(numericWeight) || numericWeight <= 0 || numericWeight > 350) {
-                      Alert.alert("Invalid Weight", "Please enter a weight between 1 and 350.");
-                      setLoading(false);
-                      return;
-                    }
-
-
-                    const { data, error } = await supabase
-                      .from('profiles')
-                      .update({ weight: numericWeight })
-                      .eq('id', user?.id)
-                      .select()
-                              
-                    if (error) {
-                      Alert.alert("Error", error.message);
-                      setLoading(false);
-                    } 
-                    else {
-                     Alert.alert("Success", "Weight updated!");
-                     Keyboard.dismiss();
+                  if (isNaN(numericWeight) || numericWeight <= 0 || numericWeight > 350) {
+                    Alert.alert("Invalid Weight", "Please enter a weight between 1 and 350.");
                     setLoading(false);
-                    }
-                    
-                    }
+                    return;
                   }
+
+
+                  const { data, error } = await supabase
+                    .from('profiles')
+                    .update({ weight: numericWeight })
+                    .eq('id', user?.id)
+                    .select()
+
+                  if (error) {
+                    Alert.alert("Error", error.message);
+                    setLoading(false);
+                  }
+                  else {
+                    Alert.alert("Success", "Weight updated!");
+                    Keyboard.dismiss();
+                    setLoading(false);
+                  }
+
+                }
+                }
               />
             </View>
 
