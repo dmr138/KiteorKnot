@@ -8,7 +8,7 @@ import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
 
 
 export default function HomePage() {
-  const[selectedSpot, setSelectedSpot] = useState(null);
+  const [selectedSpot, setSelectedSpot] = useState(null);
   return (
     <View style={styles.container}>
       <MapView
@@ -23,20 +23,18 @@ export default function HomePage() {
         }}
       >
         {data.spots.map((spot, index) => (
-            <Marker
+          <Marker
             onPress={() => setSelectedSpot(spot)}
             key={spot.id}
             coordinate={spot.location}
-            //title={spot.name}
-            //description={spot.description}
-            
-            
-            >    
-            </Marker>
+          //title={spot.name}
+          //description={spot.description}
+          >
+          </Marker>
 
-  ))}
+        ))}
       </MapView>
-      {selectedSpot && <SpotItem spots={selectedSpot}/>}
+      {selectedSpot && <SpotItem spots={selectedSpot} />}
     </View>
   );
 }
@@ -44,6 +42,6 @@ export default function HomePage() {
 const styles = StyleSheet.create({
   container: { flex: 1 },              // parent must have size
   map: { flex: 1 },
-  marker:{
+  marker: {
   }                    // map must have size
 });

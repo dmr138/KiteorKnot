@@ -1,15 +1,14 @@
 
 import { Text, View } from '@/components/Themed';
 import { useAuth } from '@/context/AuthProvider';
-import { supabase } from '@/utils/supabase';
+import { getUserWeightLocal, updateUserWeightLocal } from '@/utils/storage';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert, Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TextInput, TouchableWithoutFeedback } from "react-native";
 
-
 export default function ProfileScreen() {
-  const { signOut, user } = useAuth();
+  const { signOut, user, session } = useAuth();
   const [weight, setWeight] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -17,28 +16,8 @@ export default function ProfileScreen() {
 
 
   useEffect(() => {
-    const getTheUsersWeight = async () => {
-      if (user?.id) {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('weight')
-          .eq('id', user.id)
-          //https://supabase.com/docs/reference/javascript/single
-          .single();
-
-
-        if (error) {
-          console.log('Error fetching weight:', error.message);
-        } else if (data) {
-          setWeight(data.weight ? data.weight.toString() : '');
-        }
-      }
-    };
-    getTheUsersWeight();
-  }, [user?.id])
-
-
-
+    if (session) getUserWeightLocal(setWeight, setLoading);
+  }, [session])
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -51,7 +30,7 @@ export default function ProfileScreen() {
                 style={styles.welcomeText}
                 onLongPress={() => {
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-                  router.push('/game');
+                  router.push('/donation');
                 }}
               >
                 {user?.email?.split('@')[0] || ''}
@@ -69,7 +48,7 @@ export default function ProfileScreen() {
             </Text>
 
             <TextInput
-              placeholder=""
+              placeholder="Enter your weight"
               style={styles.textInput}
               secureTextEntry={false}
               keyboardType={'numeric'}
@@ -82,36 +61,8 @@ export default function ProfileScreen() {
               <Button
                 title={loading ? "Updating..." : "Update Weight"}
                 disabled={loading}
-                onPress={async () => {
-                  setLoading(true);
-                  const numericWeight = parseFloat(weight);
-
-                  if (isNaN(numericWeight) || numericWeight <= 0 || numericWeight > 350) {
-                    Alert.alert("Invalid Weight", "Please enter a weight between 1 and 350.");
-                    setLoading(false);
-                    return;
-                  }
-
-
-                  const { data, error } = await supabase
-                    .from('profiles')
-                    .update({ weight: numericWeight })
-                    .eq('id', user?.id)
-                    .select()
-
-                  if (error) {
-                    Alert.alert("Error", error.message);
-                    setLoading(false);
-                  }
-                  else {
-                    Alert.alert("Success", "Weight updated!");
-                    Keyboard.dismiss();
-                    setLoading(false);
-                  }
-
-                }
-                }
-              />
+                onPress={() => updateUserWeightLocal(weight, setWeight, setLoading)}
+                />
             </View>
 
             <View style={styles.spacer} />

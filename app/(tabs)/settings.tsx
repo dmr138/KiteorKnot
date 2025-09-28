@@ -4,6 +4,7 @@ import { supabase } from '@/utils/supabase';
 import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
 import { Button, ScrollView } from 'react-native';
+//this page isfor testing/edbugging edge functions currently
 
 export default function SettingsScreen() {
   const [result, setResult] = useState('Press button to fetch');

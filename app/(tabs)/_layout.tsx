@@ -1,34 +1,21 @@
-import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
-import { Tabs, useRouter } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { Tabs } from 'expo-router';
+import { StyleSheet, useColorScheme } from 'react-native';
 
 export default function TabLayout() {
-  const router = useRouter();
   const colorScheme = useColorScheme(); //grabs the phones theme
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
-
-
-  return (
-    <Tabs
-      screenOptions={{
+  const screenOptions={
         headerStyle: { backgroundColor: theme.header, height: 90 },
         headerTintColor: theme.headerTint,
         headerTitleStyle: styles.headerTitle,
         tabBarStyle: { backgroundColor: theme.tabBar },
         tabBarActiveTintColor: theme.tabActiveTint,
         tabBarInactiveTintColor: theme.tabInactiveTint,
-        // headerRight: () => (
-        //   <Pressable
-
-        //     onPress={() => alert('Settings button pressed!')}
-        //     style={styles.headerRightContainer}>
-        //     <Ionicons name="settings-outline" size={24} color={theme.headerTint} />
-        //   </Pressable>
-        // ),
-      }}
-    >
+      }
+  return (
+    <Tabs screenOptions={screenOptions}>
       <Tabs.Screen
         name="index"
         options={{
@@ -60,19 +47,19 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="game"
+        name="donation"
         options={{
           href: null,
           headerTitle: '',
-          title: 'Game',
+          title: 'donation',
         }}
       />
     </Tabs>
   );
 }
 
-
 const styles = StyleSheet.create({
+  
   headerTitle: {
     fontWeight: 'bold',
   },

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, useColorScheme, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-export default function DinoGame() {
+export default function Dino() {
   const colorScheme = useColorScheme();
 
   const invertScript = `
@@ -18,7 +18,7 @@ export default function DinoGame() {
     <View style={styles.container}>
       <WebView
         key={colorScheme}
-        source={require('../assets/dino-game/index.html')}
+        source={require('../assets/dino/index.html')}
         style={[styles.webview, { backgroundColor: colorScheme === 'dark' ? '#121212' : '#fff' }]}
         javaScriptEnabled={true}
         injectedJavaScript={invertScript}
