@@ -2,6 +2,7 @@ import data from '@/assets/weather.json';
 import SpotItem from '@/components/SpotItem';
 import { View } from '@/components/Themed';
 import { retroMapStyle } from '@/constants/mapStyles';
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps";
@@ -17,34 +18,34 @@ export default function HomePage() {
         showsCompass={false}
         toolbarEnabled={false}
         style={styles.map}
-        // initialRegion={{
-        //   latitude: 32.7765,       // Charleston
-        //   longitude: -79.9311,
-        //   latitudeDelta: 0.05,     // IMPORTANT: must be > 0
-        //   longitudeDelta: 0.05,
-        initialCamera={{
-          center: {latitude: 32.74,longitude: -79.89,},
-          pitch: 90,
-          heading: 0,   
-          zoom: 11.3, //android only, higher number zooms in more
-          // altitude: number, //ios only
-        }}
         onPress={() => setSelectedSpot(null)}
+        //moveOnMarkerPress={false}
+        
+        
+        initialCamera={{
+          center: { latitude: 32.74, longitude: -79.89 },
+          pitch: 0,
+          heading: 0,
+          zoom: 11.5,        // Android- higher is zoomed in more
+          altitude: 75000     // ios- meters
+        }}
       >
-        {data.spots.map((spot, index) => (
-          <Marker
-            onPress={() => setSelectedSpot(spot)}
-            key={spot.id}
-            coordinate={spot.location}
-          //title={spot.name}
-          //description={spot.description}
-          >
-          </Marker>
+      {data.spots.map((spot, index) => (
+        <Marker
+          stopPropagation={true}// for ios markers
+          key={spot.id}
+          flat={true}
+          coordinate={spot.location}
+          onPress={() => setSelectedSpot(spot)}
+          //tracksViewChanges={false} //for flickering icons may need later
+        >
+          <Ionicons name="arrow-up" size={35} color="red" />
+        </Marker>
 
-        ))}
-      </MapView>
-      {selectedSpot && <SpotItem spots={selectedSpot} />}
-    </View>
+      ))}
+    </MapView>
+      { selectedSpot && <SpotItem spots={selectedSpot} /> }
+    </View >
   );
 }
 
