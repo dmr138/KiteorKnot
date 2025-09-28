@@ -2,9 +2,7 @@ import { View } from '@/components/Themed';
 import React from 'react';
 import { Button, Linking, StyleSheet } from 'react-native';
 //https://reactnative.dev/docs/linking#get-the-deep-link
-
 export default function EthButton() {
-
     return (
         <View style={styles.buttonWrapper}>
             <Button
@@ -12,7 +10,7 @@ export default function EthButton() {
                 color="#627EEA"
                 onPress={() =>
                 Linking.openURL("ethereum:0x928b8CA6645662A8998D0413e3d81E18d466911E").catch(() =>
-                    Linking.openURL("https://etherscan.io/address/0x928b8CA6645662A8998D0413e3d81E18d466911E")
+                Linking.openURL("https://etherscan.io/address/0x928b8CA6645662A8998D0413e3d81E18d466911E")
                 )
                 }
             />

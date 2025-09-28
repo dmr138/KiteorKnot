@@ -15,11 +15,18 @@ export default function HomePage() {
         provider={PROVIDER_DEFAULT}     // don't force Google provider in Expo Go
         customMapStyle={retroMapStyle}
         style={styles.map}
-        initialRegion={{
-          latitude: 32.7765,       // Charleston
-          longitude: -79.9311,
-          latitudeDelta: 0.05,     // IMPORTANT: must be > 0
-          longitudeDelta: 0.05,
+        // initialRegion={{
+        //   latitude: 32.7765,       // Charleston
+        //   longitude: -79.9311,
+        //   latitudeDelta: 0.05,     // IMPORTANT: must be > 0
+        //   longitudeDelta: 0.05,
+        initialCamera={{
+          center: {latitude: 32.74,longitude: -79.89,},
+          pitch: 90,
+          heading: 0,   
+          zoom: 11.3, //android only, higher number zooms in more
+          // altitude: number, //ios only
+        
         }}
       >
         {data.spots.map((spot, index) => (
