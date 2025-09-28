@@ -14,6 +14,8 @@ export default function HomePage() {
       <MapView
         provider={PROVIDER_DEFAULT}     // don't force Google provider in Expo Go
         customMapStyle={retroMapStyle}
+        showsCompass={false}
+        toolbarEnabled={false}
         style={styles.map}
         // initialRegion={{
         //   latitude: 32.7765,       // Charleston
@@ -26,8 +28,8 @@ export default function HomePage() {
           heading: 0,   
           zoom: 11.3, //android only, higher number zooms in more
           // altitude: number, //ios only
-        
         }}
+        onPress={() => setSelectedSpot(null)}
       >
         {data.spots.map((spot, index) => (
           <Marker
