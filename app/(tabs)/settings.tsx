@@ -1,5 +1,6 @@
 import { Text, View } from '@/components/Themed';
 import { useAuth } from '@/context/AuthProvider';
+import getWeather from '@/utils/getWeather';
 import * as Haptics from 'expo-haptics';
 import { useState } from 'react';
 import { Button, ScrollView } from 'react-native';
@@ -15,19 +16,8 @@ export default function SettingsScreen() {
         title="Call Edge Function"
         onPress={async () => {
           await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-          
-          const response = await fetch('https://weatherapi.turbophil.xyz/', {
-            headers: {
-              Authorization: `Bearer ${session?.access_token}`,
-            },
-          });
-
-          if (response.status === 401) {
-            setResult(`Unauthorized`);
-          } else {
-            const data = await response.json();
-            setResult(JSON.stringify(data, null, 2));
-          }
+          const weatherData = await getWeather(session?.access_token ?? '');
+          setResult(weatherData);
         }}
       />
 
