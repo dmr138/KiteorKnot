@@ -12,7 +12,7 @@ const SpotItem = ({ spots }) => {
   useEffect(() => {
     getUserWeightLocal(setWeight, setLoading);
   }, [spots]); //not the most efficient but it works for now
-//spots.current.wind_speed_10m
+//spots.data.current.wind_speed_10m
   return (
     <View style={styles.card}>
       <Image style={styles.img} source={require('@/assets/images/favicon.png')} />
