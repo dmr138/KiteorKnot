@@ -4,7 +4,7 @@
     "slug": "kiteorknot",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon":"./assets/images/AppIcon~ios-marketing.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,8 +13,9 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/ic_launcher_foreground.png",
+        "backgroundColor": "#3880E9",
+        "monochromeImage": "./assets/images/ic_launcher_monochrome.png"
       },
       "edgeToEdgeEnabled": true,
       "softwareKeyboardLayoutMode": "pan"

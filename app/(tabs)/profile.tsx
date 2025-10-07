@@ -8,16 +8,16 @@ import { useEffect, useState } from 'react';
 import { Alert, Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TextInput, TouchableWithoutFeedback } from "react-native";
 
 export default function ProfileScreen() {
-  const { signOut, user, session } = useAuth();
+  const { signOut, user } = useAuth();
   const [weight, setWeight] = useState('');
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
   const router = useRouter();
 
 
 
   useEffect(() => {
-    if (session) getUserWeightLocal(setWeight, setLoading);
-  }, [session])
+    getUserWeightLocal().then(localWeight => setWeight(localWeight ?? ''));
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -44,13 +44,13 @@ export default function ProfileScreen() {
               {'\n'}{'\n'}
               KiteorKnot will use this information and the current
               {'\n'}
-              weather data to recomend a kite size
+              weather data to recommend a kite size
             </Text>
 
             <TextInput
               placeholder="Enter your weight"
               style={styles.textInput}
-              secureTextEntry={false}
+              inputMode="numeric"
               keyboardType={'numeric'}
               autoComplete='off'
               value={weight}
@@ -59,9 +59,8 @@ export default function ProfileScreen() {
 
             <View style={styles.updatebtnContainer}>
               <Button
-                title={loading ? "Updating..." : "Update Weight"}
-                disabled={loading}
-                onPress={() => updateUserWeightLocal(weight, setWeight, setLoading)}
+                title={"Update Weight"}
+                onPress={() => updateUserWeightLocal(weight)}
                 />
             </View>
 

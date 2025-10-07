@@ -7,12 +7,13 @@ import { Text, View } from './Themed';
 const SpotItem = ({ spots }) => {
 
   const [weight, setWeight] = useState('');
-  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
-    getUserWeightLocal(setWeight, setLoading);
+    getUserWeightLocal().then(localWeight => setWeight(localWeight ?? ''));
   }, [spots]); //not the most efficient but it works for now
 //spots.data.current.wind_speed_10m
+
   return (
     <View style={styles.card}>
       <Image style={styles.img} source={require('@/assets/images/favicon.png')} />
@@ -22,7 +23,7 @@ const SpotItem = ({ spots }) => {
           <Text style={styles.infoTxt}>{spots.forecast[0].currentWindKts}kts</Text>
           <Text style={styles.infoTxt}>{spots.forecast[0].currentWindDir}</Text>
         </View>
-        <Text>{weight ? `${kiteCalc(Number(weight), Number(spots.forecast[0].currentWindKts ?? 0))}m` : loading ? 'Loading...' : 'Add Weight in Profile page'}</Text>
+        <Text>{weight ? `${kiteCalc(Number(weight), Number(spots.forecast[0].currentWindKts ?? 0))}m` : 'Add Weight in Profile page'}</Text>
       </View>
 
     </View>
