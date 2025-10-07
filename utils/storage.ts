@@ -7,7 +7,7 @@ import { Alert, Keyboard } from "react-native";
 
   export async function getUserWeightLocal(userID: string) {
     try {
-      return await AsyncStorage.getItem(`userWeight:${userID}`);
+      return await AsyncStorage.getItem(`${userID}:userWeight`);
     }
     catch (error) {
       if (error instanceof Error) {
@@ -24,7 +24,7 @@ export async function updateUserWeightLocal(newWeight: string, userID: string) {
         Alert.alert("Invalid Weight", "Please enter a weight between 1 and 350.");
         return;
       }
-      await AsyncStorage.setItem(`userWeight:${userID}`, newWeight);
+      await AsyncStorage.setItem(`${userID}:userWeight`, newWeight);
       Alert.alert("Success", "Weight updated!");
       Keyboard.dismiss();
     }
