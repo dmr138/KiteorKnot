@@ -1,3 +1,4 @@
+import { useAuth } from '@/context/AuthProvider';
 import { getUserWeightLocal } from '@/utils/storage';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
@@ -5,14 +6,14 @@ import kiteCalc from './kiteCalc';
 import { Text, View } from './Themed';
 
 const SpotItem = ({ spots }) => {
-
+  const { user } = useAuth();
   const [weight, setWeight] = useState('');
 
 
   useEffect(() => {
-    getUserWeightLocal().then(localWeight => setWeight(localWeight ?? ''));
+    user?.id && getUserWeightLocal(user.id).then(localWeight => setWeight(localWeight ?? ''));
   }, [spots]); //not the most efficient but it works for now
-//spots.data.current.wind_speed_10m
+  //spots.data.current.wind_speed_10m
 
   return (
     <View style={styles.card}>

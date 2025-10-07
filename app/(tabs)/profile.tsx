@@ -16,8 +16,8 @@ export default function ProfileScreen() {
 
 
   useEffect(() => {
-    getUserWeightLocal().then(localWeight => setWeight(localWeight ?? ''));
-  }, []);
+    user?.id && getUserWeightLocal(user.id).then(localWeight => setWeight(localWeight ?? ''));
+  }, [user?.id]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -60,7 +60,7 @@ export default function ProfileScreen() {
             <View style={styles.updatebtnContainer}>
               <Button
                 title={"Update Weight"}
-                onPress={() => updateUserWeightLocal(weight)}
+                onPress={() => user?.id && updateUserWeightLocal(weight, user.id)}
                 />
             </View>
 
