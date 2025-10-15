@@ -26,6 +26,7 @@ function RootLayoutNav() {
     <Stack>
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="spot/[id]" options={{ headerShown: true, title: 'Spot Details' }} />  
     </Stack>
   );
 }

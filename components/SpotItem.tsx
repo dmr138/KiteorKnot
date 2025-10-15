@@ -1,10 +1,10 @@
 import { getUserWeightLocal } from '@/utils/storage';
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, Pressable, StyleSheet } from 'react-native';
 import kiteCalc from './kiteCalc';
 import { Text, View } from './Themed';
 
-const SpotItem = ({ spots }) => {
+const SpotItem = ({ spots, onPress, onClose }) => {
 
   const [weight, setWeight] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,18 +14,21 @@ const SpotItem = ({ spots }) => {
   }, [spots]); //not the most efficient but it works for now
 //spots.data.current.wind_speed_10m
   return (
-    <View style={styles.card}>
-      <Image style={styles.img} source={require('@/assets/images/favicon.png')} />
-      <View style={styles.spotInfo}>
-        <Text style={styles.infoTxt}>{spots.name}</Text>
-        <View style={styles.windInfo}>
-          <Text style={styles.infoTxt}>{spots.forecast[0].currentWindKts}kts</Text>
-          <Text style={styles.infoTxt}>{spots.forecast[0].currentWindDir}</Text>
+    <Pressable onPress={onPress} style={styles.card} >
+        <Image style={styles.img} source={require('@/assets/images/favicon.png')} />
+        <View style={styles.spotInfo}>
+          <Text style={styles.infoTxt}>{spots.name}</Text>
+          <View style={styles.windInfo}>
+            <Text style={styles.infoTxt}>{spots.forecast[0].currentWindKts}kts</Text>
+            <Text style={styles.infoTxt}>{spots.forecast[0].currentWindDir}</Text>
+          </View>
+          <View style={styles.windInfo}>
+            <Text>{weight ? `${kiteCalc(Number(weight), Number(spots.forecast[0].currentWindKts ?? 0))}m` : loading ? 'Loading...' : 'Add Weight in Profile page'}</Text>
+            {onClose && <Pressable onPress={onClose}><Text>Close</Text></Pressable>}
+          </View>
         </View>
-        <Text>{weight ? `${kiteCalc(Number(weight), Number(spots.forecast[0].currentWindKts ?? 0))}m` : loading ? 'Loading...' : 'Add Weight in Profile page'}</Text>
-      </View>
-
-    </View>
+    
+    </Pressable>
   )
 }
 
@@ -33,7 +36,7 @@ export default SpotItem
 
 const styles = StyleSheet.create({
   card: {
-    //backgroundColor: 'green',
+    backgroundColor: 'white',
     position: 'absolute',
     bottom: 50,
     left: 10,
