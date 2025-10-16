@@ -10,7 +10,7 @@ import { Alert, Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Te
 export default function ProfileScreen() {
   const { signOut, user } = useAuth();
   const [weight, setWeight] = useState('');
-  //const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
 
