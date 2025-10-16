@@ -4,7 +4,7 @@
     "slug": "kiteorknot",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon":"./assets/images/AppIcon~ios-marketing.png",
+    "icon": "./assets/images/AppIcon~ios-marketing.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -35,7 +35,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

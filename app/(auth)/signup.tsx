@@ -26,7 +26,10 @@ export default function SignUp() {
         if (error) {
             Alert.alert(error.message);
         } else {
-            Alert.alert("Account created successfully! Check your email to confirm.");
+            Alert.alert('Account created successfully!',
+                'Check your email to confirm.',
+                [{ text: 'OK', onPress: () => router.replace('/') }]
+            );
         }
     };
     return (
