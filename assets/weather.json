@@ -126,7 +126,7 @@
         {
           "date": "2025-09-25",
           "currentWindKts": 15,
-          "currentWindDir": "E",
+          "currentWindDir": "NE",
           "averageWindKts": 14.0,
           "times": [
             { "time": "08:00", "windSpeedKts": 9, "windDir": "NE" },
@@ -137,7 +137,7 @@
         {
           "date": "2025-09-26",
           "currentWindKts": 14,
-          "currentWindDir": "E",
+          "currentWindDir": "NW",
           "averageWindKts": 13.3,
           "times": [
             { "time": "08:00", "windSpeedKts": 10, "windDir": "NE" },
@@ -148,7 +148,7 @@
         {
           "date": "2025-09-27",
           "currentWindKts": 18,
-          "currentWindDir": "E",
+          "currentWindDir": "WNW",
           "averageWindKts": 17.0,
           "times": [
             { "time": "08:00", "windSpeedKts": 12, "windDir": "NE" },
@@ -167,7 +167,7 @@
         {
           "date": "2025-09-24",
           "currentWindKts": 18,
-          "currentWindDir": "ENE",
+          "currentWindDir": "WNW",
           "averageWindKts": 17.7,
           "times": [
             { "time": "08:00", "windSpeedKts": 13, "windDir": "NNE" },
@@ -178,7 +178,7 @@
         {
           "date": "2025-09-25",
           "currentWindKts": 16,
-          "currentWindDir": "E",
+          "currentWindDir": "WNW",
           "averageWindKts": 15.3,
           "times": [
             { "time": "08:00", "windSpeedKts": 11, "windDir": "NE" },

@@ -1,22 +1,23 @@
-import { getUserWeightLocal } from '@/utils/storage';
-import React, { useEffect, useState } from 'react';
+import { dirToDeg } from '@/utils/windDir';
+import React from 'react';
 import { Image, Pressable, StyleSheet } from 'react-native';
 import kiteCalc from './kiteCalc';
 import { Text, View } from './Themed';
 
 const SpotItem = ({ spots, onPress, onClose }) => {
 
-  const [weight, setWeight] = useState('');
+  //const [weight, setWeight] = useState('');
+  const weight = '180'; //temporary hardcoded weight
 
-
-  useEffect(() => {
-    user?.id && getUserWeightLocal(user.id).then(localWeight => setWeight(localWeight ?? ''));
-  }, [spots]); //not the most efficient but it works for now
+  //useEffect(() => {
+  //  user?.id && getUserWeightLocal(user.id).then(localWeight => setWeight(localWeight ?? ''));
+  //}, [spots]); //not the most efficient but it works for now
   //spots.data.current.wind_speed_10m
-
+  const windD = spots?.forecast[0].currentWindDir;
+  const deg = Number.isFinite(dirToDeg(windD)) ? dirToDeg(windD) : 0;
   return (
     <Pressable onPress={onPress} style={styles.card} >
-        <Image style={styles.img} source={require('@/assets/images/favicon.png')} />
+        <Image style={[styles.img, { transform: [{ rotate: `${deg}deg` }] }]} source={require('@/assets/images/arrow-up.png')} />
         <View style={styles.spotInfo}>
           <Text style={styles.infoTxt}>{spots.name}</Text>
           <View style={styles.windInfo}>
@@ -62,11 +63,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   img: {
-    width: 100,
+    width: 70,
     aspectRatio: 1,
-    backgroundColor: 'black',
+    backgroundColor: 'transparent',
     margin: 0,
     padding: 0,
+    alignSelf: 'center',
   },
   infoTxt: {
     fontSize: 30,
