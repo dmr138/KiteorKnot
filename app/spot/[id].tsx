@@ -1,9 +1,8 @@
 import data from '@/assets/weather.json';
-import { Text, View } from '@/components/Themed';
 import { dirToDeg } from '@/utils/windDir';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 
 export default function SpotDetails () {
