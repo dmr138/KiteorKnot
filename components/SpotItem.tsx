@@ -7,12 +7,13 @@ import { Text, View } from './Themed';
 const SpotItem = ({ spots, onPress, onClose }) => {
 
   const [weight, setWeight] = useState('');
-  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
-    getUserWeightLocal(setWeight, setLoading);
+    user?.id && getUserWeightLocal(user.id).then(localWeight => setWeight(localWeight ?? ''));
   }, [spots]); //not the most efficient but it works for now
-//spots.data.current.wind_speed_10m
+  //spots.data.current.wind_speed_10m
+
   return (
     <Pressable onPress={onPress} style={styles.card} >
         <Image style={styles.img} source={require('@/assets/images/favicon.png')} />
