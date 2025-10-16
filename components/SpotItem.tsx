@@ -13,7 +13,7 @@ const SpotItem = ({ spots, onPress, onClose }) => {
   const [weight, setWeight] = useState('');
   useEffect(() => {
   user?.id && getUserWeightLocal(user.id).then(localWeight => setWeight(localWeight ?? ''));
-  }, [spots, weight]); //not the most efficient but it works for now
+  }, [spots]); //not the most efficient but it works for now
   //spots.data.current.wind_speed_10m
   const windD = spots?.forecast[0].currentWindDir;
   const deg = Number.isFinite(dirToDeg(windD)) ? dirToDeg(windD) : 0;
