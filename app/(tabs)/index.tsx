@@ -32,8 +32,8 @@ export default function HomePage() {
             coordinate={spot.location}
             //title={spot.name}
             //description={spot.description}
-            
-            
+            flat={true}
+            stopPropagation={true}// for ios markers
             >    
             </Marker>
 
