@@ -1,8 +1,9 @@
 import data from '@/assets/weather.json';
+import { Text, View } from '@/components/Themed';
 import { dirToDeg } from '@/utils/windDir';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 
 export default function SpotDetails () {
@@ -85,7 +86,7 @@ const deg3 = Number.isFinite(dirToDeg(wind3)) ? dirToDeg(wind3) : 0;
 
 const styles = StyleSheet.create({
     container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-    card: {flex: 1, flexDirection:'row', height: 200, width: 200, backgroundColor: 'white', padding: 20, margin: 20, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,},
+    card: {flex: 1, flexDirection:'row', height: 200, width: 200, padding: 20, margin: 20, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,},
     text: {flex: 1, flexDirection: 'column', zIndex: 1, justifyContent: 'space-evenly'},
     img: {
     maxWidth: 20,

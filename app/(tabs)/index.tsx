@@ -16,12 +16,14 @@ export default function HomePage() {
         provider={PROVIDER_DEFAULT}     // don't force Google provider in Expo Go
         customMapStyle={retroMapStyle}
         style={styles.map}
-        initialRegion={{
-          latitude: 32.7765,       // Charleston
-          longitude: -79.9311,
-          latitudeDelta: 0.05,     // IMPORTANT: must be > 0
-          longitudeDelta: 0.05,
+        initialCamera={{
+          center: { latitude: 32.74, longitude: -79.89 },
+          pitch: 0,
+          heading: 0,
+          zoom: 11.5,        // Android- higher is zoomed in more
+          altitude: 75000     // ios- meters
         }}
+        onPress={() => setSelectedSpot(null)}
       >
         {data.spots.map((spot, index) => (
             <Marker
