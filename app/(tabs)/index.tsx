@@ -44,8 +44,9 @@ export default function HomePage() {
             coordinate={{
               latitude: Number(spot.location.latitude),
               longitude: Number(spot.location.longitude),}}
-            title={spot.name}
+            //title={spot.name}
             //description={spot.description}
+            stopPropagation={true}
             
             
             >    
