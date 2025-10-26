@@ -35,7 +35,7 @@ export default function HomePage() {
           longitudeDelta: 0.05,
         }}
       >
-        {result.spots.map((spot, index) => (
+        {result.spots.map((spot) => (
             <Marker
             onPress={() => setSelectedSpot(spot)}
             key={spot.id}
