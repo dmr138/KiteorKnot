@@ -1,6 +1,7 @@
 import { useAuth } from '@/context/AuthProvider';
 import { getUserWeightLocal } from '@/utils/storage';
 import { dirToDeg } from '@/utils/windDir';
+import { degToDir } from '@/utils/windtxt';
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet } from 'react-native';
 import kiteCalc from './kiteCalc';
@@ -11,15 +12,20 @@ const SpotItem = ({ spots, onPress, onClose }) => {
   //const weight = '180'; //temporary hardcoded weight
   const {user} = useAuth();
   const [weight, setWeight] = useState('');
+
   useEffect(() => {
   user?.id && getUserWeightLocal(user.id).then(localWeight => setWeight(localWeight ?? ''));
   }, [spots]); //not the most efficient but it works for now
   //spots.data.current.wind_speed_10m
-  const windD = spots?.forecast[0].currentWindDir;
+
+  const windD = spots?.data.current.wind_direction_10m;
   const deg = Number.isFinite(dirToDeg(windD)) ? dirToDeg(windD) : 0;
+  const degTxt = degToDir(deg);
+  const speed = spots?.data.current.wind_speed_10m;
+
   let kiteText: string;
   if (weight) {
-    kiteText = `${kiteCalc(Number(weight), Number(spots.forecast[0].currentWindKts ?? 0))}m`;
+    kiteText = `${kiteCalc(Number(weight), Number(speed ?? 0))}m`;
   } else {
     kiteText = 'Add Weight in Profile page';
   }
@@ -30,8 +36,8 @@ const SpotItem = ({ spots, onPress, onClose }) => {
         <View style={styles.spotInfo}>
           <Text style={styles.infoTxt}>{spots.name}</Text>
           <View style={styles.windInfo}>
-            <Text style={styles.infoTxt}>{spots.forecast[0].currentWindKts}kts</Text>
-            <Text style={styles.infoTxt}>{spots.forecast[0].currentWindDir}</Text>
+            <Text style={styles.infoTxt}>{speed}kts</Text>
+            <Text style={styles.infoTxt}>{degTxt}</Text>
           </View>
           <View style={styles.windInfo}>
             <Text>{kiteText}</Text>

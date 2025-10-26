@@ -8,5 +8,5 @@ export  default async function getWeather(token: string): Promise<string> {
   });
     if (error) return `Error: ${error.message}`;
     //return data;
-    return JSON.stringify(data, null, 2);
+    return data;
     }

@@ -16,8 +16,9 @@ export default function SettingsScreen() {
         title="Call Edge Function"
         onPress={async () => {
           await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-          const weatherData = await getWeather(session?.access_token ?? '');
-          setResult(weatherData);
+          const weatherData: any = await getWeather(session?.access_token ?? '');
+          const weatherDataString = JSON.stringify(weatherData, null, 2);
+          setResult(weatherDataString);
         }}
       />
 

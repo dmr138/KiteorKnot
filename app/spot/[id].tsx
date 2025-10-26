@@ -1,82 +1,146 @@
-import data from '@/assets/weather.json';
+import { useAuth } from '@/context/AuthProvider';
+import { avgWindDir, avgWindSpeed, forecastSplit, getDate } from '@/utils/averageWind';
+import { Forecast, Spot } from '@/utils/customTypes';
+import getWeather from '@/utils/getWeather';
 import { dirToDeg } from '@/utils/windDir';
+import { degToDir } from '@/utils/windtxt';
 import { useLocalSearchParams } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { BarChart } from 'react-native-gifted-charts';
+import { BarChart, BarChartPropsType } from 'react-native-gifted-charts';
 
 export default function SpotDetails () {
+    const { session } = useAuth();
     const {id} = useLocalSearchParams<{id: string}>();
     const spotId = Number(id);
-    const spot = data.spots.find(s => s.id === spotId);
-    const [selectedForecast, setSelectedForecast] = useState(spot?.forecast[0]);
-    const barData = [
-        { value: selectedForecast.times[0].windSpeedKts, label: selectedForecast.times[0].time },
-        { value: selectedForecast.times[1].windSpeedKts, label: selectedForecast.times[1].time },
-        { value: selectedForecast.times[2].windSpeedKts, label: selectedForecast.times[2].time },
-    ];
-const wind0 = spot?.forecast[0].currentWindDir;
-const wind1 = spot?.forecast[1].currentWindDir;
-const wind2 = spot?.forecast[2].currentWindDir;
-const wind3 = spot?.forecast[3].currentWindDir;
 
-const deg0 = Number.isFinite(dirToDeg(wind0)) ? dirToDeg(wind0) : 0 ;
-const deg1 = Number.isFinite(dirToDeg(wind1)) ? dirToDeg(wind1) : 0;
-const deg2 = Number.isFinite(dirToDeg(wind2)) ? dirToDeg(wind2) : 0;
-const deg3 = Number.isFinite(dirToDeg(wind3)) ? dirToDeg(wind3) : 0;
+    const [result, setResult] = useState<{ spots: Spot[] }>({ spots: [] });
+    const [selectedForecast, setSelectedForecast] = useState<Forecast | null>(null);
+
+    useEffect( () => {
+        
+        const fetchData = async () => {
+            try{
+                const weatherData: any = await getWeather(session?.access_token ?? '');
+                setResult(weatherData);
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+            }
+              };
+            fetchData();}, [session?.access_token]);
+
+    const spot2 = useMemo(() => result.spots.find(s => s.id === spotId), [result.spots, spotId]);
+//forecast info
+    const hourly = spot2?.data?.hourly;
+    const hasHourly = Boolean(hourly?.time && hourly?.wind_speed_10m && hourly?.wind_direction_10m);
+
+    if (!hasHourly) {
+        return <Text style={{ padding: 16 }}>Loading…</Text>;
+    }
+    
+    //Day 1 Forecast
+    const day1WwindDirs = forecastSplit(spot2?.data.hourly.wind_direction_10m, 0, 23) as number[];
+    const day1WSpeeds = forecastSplit(spot2?.data.hourly.wind_speed_10m, 0,23) as (number| string)[];
+    const day1Times = forecastSplit(spot2?.data.hourly.time, 0, 23 ) as string[];
+    const day1AvgDir = avgWindDir(day1WwindDirs) as number;
+    const day1AvgSpeed = avgWindSpeed(day1WSpeeds) as number;
+    //Day 2 Forecast info
+    const day2WwindDirs = forecastSplit(spot2?.data.hourly.wind_direction_10m, 24, 47) as number[];
+    const day2WSpeeds = forecastSplit(spot2?.data.hourly.wind_speed_10m, 24, 47 )  as (number| string)[];
+    const day2Times = forecastSplit(spot2?.data.hourly.time, 24, 47 ) as string[];
+    const day2AvgDir = avgWindDir(day2WwindDirs);
+    const day2AvgSpeed = avgWindSpeed(day2WSpeeds);
+    //Day 3 Forecast info
+    const day3WwindDirs = forecastSplit(spot2?.data.hourly.wind_direction_10m, 47, 71) as number[];
+    const day3WSpeeds = forecastSplit(spot2?.data.hourly.wind_speed_10m, 48, 71) as (number| string)[];
+    const day3Times = forecastSplit(spot2?.data.hourly.time, 48, 71 ) as string[];
+    const day3AvgDir = avgWindDir(day3WwindDirs);
+    const day3AvgSpeed = avgWindSpeed(day3WSpeeds);
+
+    const forecastDay1: Forecast = { 
+        date: getDate(day1Times),
+        AvgWindSpd: day1AvgSpeed,
+        AvgWindDirection: day1AvgDir,
+        times: day1Times as string[],
+        windSpeedsKts: day1WSpeeds,
+        windDirectionsDeg: day1WwindDirs as number[],
+    };
+    const forecastDay2: Forecast = { 
+        date: getDate(day2Times),
+        AvgWindSpd: day2AvgSpeed,
+        AvgWindDirection: day2AvgDir,
+        times: day2Times as string[],
+        windSpeedsKts: day2WSpeeds,
+        windDirectionsDeg: day2WwindDirs as number[],
+    };
+    const forecastDay3: Forecast = { 
+        date: getDate(day3Times),
+        AvgWindSpd: day3AvgSpeed,
+        AvgWindDirection: day3AvgDir,
+        times: day3Times as string[],
+        windSpeedsKts: day3WSpeeds,
+        windDirectionsDeg: day3WwindDirs as number[],
+    };
+    
+    const currentForecast = selectedForecast ?? forecastDay1;
+
+    let barData: BarChartPropsType['data'] = [];
+    if(currentForecast){
+        barData = currentForecast.windSpeedsKts.map((v, i) => ({
+            value: Number(v) || 0,
+            label: currentForecast.times[i]?.slice(11, 16) ?? '',
+      }));
+    }
+    
+    const wind0 = spot2?.data.current.wind_direction_10m;
+    const deg0 = wind0 ? dirToDeg(wind0) : 0 ;
+
 
   return (
     <View>
-      <Text>{spot.name}</Text>
+      <Text>{spot2?.name}</Text>
         <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false}>
-            <Pressable onPress={() => setSelectedForecast(spot?.forecast[0])} >
+            <Pressable onPress={() => setSelectedForecast(forecastDay1)} >
                 <View style={styles.card}>
                     <View style={styles.text}>
-                        <Text>{spot?.forecast[0].date}</Text>
-                        <Text>Speed: {spot?.forecast[0].averageWindKts} kts</Text>
-                        <Text>Dir: {spot?.forecast[0].currentWindDir}</Text>
+                        <Text>{forecastDay1.date}</Text>
+                        <Text>Speed: {spot2?.data.current.wind_speed_10m} kts</Text>
+                        <Text>Dir: {degToDir(spot2?.data.current.wind_direction_10m)}</Text>
                     </View>
                     <Image style={[styles.img, { transform: [{ rotate: `${deg0}deg` }] }]} source={require('@/assets/images/arrow-up.png')} />
                 </View>
             </Pressable>
 
-            <Pressable onPress={() => setSelectedForecast(spot?.forecast[1])} >
+            <Pressable onPress={() => setSelectedForecast(forecastDay2)} >
                 <View style={styles.card}>
                     <View style={styles.text}>
-                        <Text>{spot?.forecast[1].date}</Text>
-                        <Text>Speed: {spot?.forecast[1].averageWindKts} kts</Text>
-                        <Text>Dir: {spot?.forecast[1].currentWindDir}</Text>
+                        <Text>{forecastDay2.date}</Text>
+                        <Text>Speed: {forecastDay2.AvgWindSpd} kts</Text>
+                        <Text>Dir: {degToDir(forecastDay2.AvgWindDirection)}</Text>
                     </View>
-                    <Image style={[styles.img, { transform: [{ rotate: `${deg1}deg` }] }]} source={require('@/assets/images/arrow-up.png')} />
+                    <Image style={[styles.img, { transform: [{ rotate: `${forecastDay2.AvgWindDirection}deg` }] }]} source={require('@/assets/images/arrow-up.png')} />
                 </View>
             </Pressable>
 
-            <Pressable onPress={() => setSelectedForecast(spot?.forecast[2])} >
+            <Pressable onPress={() => setSelectedForecast(forecastDay3)} >
                 <View style={styles.card}>
                     <View style={styles.text}>
-                        <Text>{spot?.forecast[2].date}</Text>
-                        <Text>Speed: {spot?.forecast[2].averageWindKts} kts</Text>
-                        <Text>Dir: {spot?.forecast[2].currentWindDir}</Text>
+                        <Text>{forecastDay3.date}</Text>
+                        <Text>Speed: {forecastDay3.AvgWindSpd} kts</Text>
+                        <Text>Dir: {degToDir(forecastDay2.AvgWindDirection)}</Text>
                     </View>
-                    <Image style={[styles.img, { transform: [{ rotate: `${deg2}deg` }] }]} source={require('@/assets/images/arrow-up.png')} />
+                    <Image style={[styles.img, { transform: [{ rotate: `${forecastDay3.AvgWindDirection}deg` }] }]} source={require('@/assets/images/arrow-up.png')} />
                 </View>    
             </Pressable>
 
-            <Pressable style={styles.card} onPress={() => setSelectedForecast(spot?.forecast[3])} >
-                    <View style={styles.text}>
-                        <Text>{spot?.forecast[3].date}</Text>
-                        <Text>Speed: {spot?.forecast[3].averageWindKts} kts</Text>
-                        <Text>Dir: {spot?.forecast[3].currentWindDir}</Text>
-                    </View>
-                    <Image style={[styles.img, { transform: [{ rotate: `${deg3}deg` }] }]} source={require('@/assets/images/arrow-up.png')} />
-            </Pressable>
+            
         </ScrollView>
         <Text>Selected Forecast:</Text>
-        <Text>{selectedForecast ? `Date: ${selectedForecast.date}` : 'None selected'}</Text>
+        <Text>{currentForecast.date ? `Date: ${currentForecast.date}` : 'None selected'}</Text>
         <ScrollView>
             {barData.length > 0 ? <BarChart data={barData} /> : <Text>No hourly data</Text>}
         </ScrollView>
-        <Text>{spot?.description}</Text>
+        <Text>{spot2?.description}</Text>
     </View>
   );
 }
@@ -84,9 +148,9 @@ const deg3 = Number.isFinite(dirToDeg(wind3)) ? dirToDeg(wind3) : 0;
 
 
 const styles = StyleSheet.create({
-    container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-    card: {flex: 1, flexDirection:'row', height: 200, width: 200, backgroundColor: 'white', padding: 20, margin: 20, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,},
-    text: {flex: 1, flexDirection: 'column', zIndex: 1, justifyContent: 'space-evenly'},
+    container: {flex: 1, alignItems: 'center', justifyContent: 'center' },
+    card: { flexDirection:'row', height: 200, width: 200, backgroundColor: 'white', padding: 20, margin: 20, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,},
+    text: {flex: 1, flexDirection: 'column',  justifyContent: 'space-evenly'},
     img: {
     maxWidth: 20,
     aspectRatio: 1,
