@@ -45,5 +45,24 @@ export function forecastSplit(array: (number | string)[], start: number, end: nu
 
 export function getDate(array: (string | number)[]): string {
     if (typeof array[0] !== "string") return 'error';
-    return String(array[0]).slice(0,10);
+    
+    const date = new Date(String(array[0]));
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    const dayOfWeek = days[date.getDay()];
+    const month = months[date.getMonth()];
+    const dayOfMonth = date.getDate();
+
+    const suffix = getOrdinalSuffix(dayOfMonth);
+
+    return `${month} ${dayOfMonth}${suffix}\n${dayOfWeek}`;
 };
+
+function getOrdinalSuffix(day: number): string { // return proper suffix for 1st, 2nd, 3rd, 4th, etc.
+    if (11 <= day && day <= 13) return 'th';
+    else if (day % 10 == 1) return 'st';
+    else if (day % 10 == 2) return 'nd';
+    else if (day % 10 == 3) return 'rd';
+    else return 'th';
+}

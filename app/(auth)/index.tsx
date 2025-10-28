@@ -1,4 +1,5 @@
 import { supabase } from '@/utils/supabase';
+import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Button, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
@@ -8,6 +9,9 @@ export default function Index() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [fontsLoaded] = useFonts({
+        'Pacifico': require('@/assets/fonts/Pacifico-Regular.ttf'),
+    });
 
 
     const handleLogin = async () => {
@@ -99,10 +103,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     header: {
-        fontSize: 60,
+        fontSize: 69,
         marginBottom: 0,
-        marginTop: 40,
+        marginTop: 169,
         alignItems: 'center',
+        fontFamily: 'Pacifico',
     },
     headerContainer: {
         alignItems: 'center',
@@ -164,6 +169,6 @@ const styles = StyleSheet.create({
     },
     partition: {
         fontSize: 30,
-        color: '#444444ff',
+        color: '#000000ff',
     },
 });

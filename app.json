@@ -35,8 +35,12 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-font"
     ],
+    "fonts": {
+      "Pacifico": "./assets/fonts/Pacifico-Regular.ttf"
+    },
     "experiments": {
       "typedRoutes": true
     }
