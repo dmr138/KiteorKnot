@@ -54,3 +54,8 @@ export function degToDir(dir: number | string): string {
     }
     return degTxt;
 }
+
+export function isSafe(dir: string, goodWinds: string[]): boolean{
+    // Return true if the provided direction string is present in the goodWinds array
+    return goodWinds.includes(dir);
+}

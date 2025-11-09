@@ -4,8 +4,8 @@ import { Forecast, Spot } from '@/utils/customTypes';
 import getWeather from '@/utils/getWeather';
 import { dirToDeg } from '@/utils/windDir';
 import { degToDir } from '@/utils/windtxt';
-import { useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { BarChart, BarChartPropsType } from 'react-native-gifted-charts';
 
@@ -16,6 +16,7 @@ export default function SpotDetails () {
 
     const [result, setResult] = useState<{ spots: Spot[] }>({ spots: [] });
     const [selectedForecast, setSelectedForecast] = useState<Forecast | null>(null);
+    const nav = useNavigation();
 
     useEffect( () => {
         
@@ -30,6 +31,13 @@ export default function SpotDetails () {
             fetchData();}, [session?.access_token]);
 
     const spot2 = useMemo(() => result.spots.find(s => s.id === spotId), [result.spots, spotId]);
+    const spotName = spot2?.name ?? 'Spot Details';
+
+    useLayoutEffect(() =>{
+        nav.setOptions({
+            title: spotName,
+        });
+    }, [nav, spotName]);
 //forecast info
     const hourly = spot2?.data?.hourly;
     const hasHourly = Boolean(hourly?.time && hourly?.wind_speed_10m && hourly?.wind_direction_10m);
@@ -42,19 +50,19 @@ export default function SpotDetails () {
     const day1WwindDirs = forecastSplit(spot2?.data.hourly.wind_direction_10m, 0, 23) as number[];
     const day1WSpeeds = forecastSplit(spot2?.data.hourly.wind_speed_10m, 0,23) as (number| string)[];
     const day1Times = forecastSplit(spot2?.data.hourly.time, 0, 23 ) as string[];
-    const day1AvgDir = avgWindDir(day1WwindDirs) as number;
+    const day1AvgDir = avgWindDir(day1WwindDirs, day1WSpeeds) as number;
     const day1AvgSpeed = avgWindSpeed(day1WSpeeds) as number;
     //Day 2 Forecast info
     const day2WwindDirs = forecastSplit(spot2?.data.hourly.wind_direction_10m, 24, 47) as number[];
     const day2WSpeeds = forecastSplit(spot2?.data.hourly.wind_speed_10m, 24, 47 )  as (number| string)[];
     const day2Times = forecastSplit(spot2?.data.hourly.time, 24, 47 ) as string[];
-    const day2AvgDir = avgWindDir(day2WwindDirs);
+    const day2AvgDir = avgWindDir(day2WwindDirs, day2WSpeeds);
     const day2AvgSpeed = avgWindSpeed(day2WSpeeds);
     //Day 3 Forecast info
-    const day3WwindDirs = forecastSplit(spot2?.data.hourly.wind_direction_10m, 47, 71) as number[];
+    const day3WwindDirs = forecastSplit(spot2?.data.hourly.wind_direction_10m, 48, 71) as number[];
     const day3WSpeeds = forecastSplit(spot2?.data.hourly.wind_speed_10m, 48, 71) as (number| string)[];
     const day3Times = forecastSplit(spot2?.data.hourly.time, 48, 71 ) as string[];
-    const day3AvgDir = avgWindDir(day3WwindDirs);
+    const day3AvgDir = avgWindDir(day3WwindDirs, day3WSpeeds);
     const day3AvgSpeed = avgWindSpeed(day3WSpeeds);
 
     const forecastDay1: Forecast = { 
@@ -88,7 +96,7 @@ export default function SpotDetails () {
     if(currentForecast){
         barData = currentForecast.windSpeedsKts.map((v, i) => ({
             value: Number(v) || 0,
-            label: currentForecast.times[i]?.slice(11, 16) ?? '',
+            label: currentForecast.times[i]?.slice(11, 13) ?? '',
       }));
     }
     
@@ -98,7 +106,6 @@ export default function SpotDetails () {
 
   return (
     <View>
-      <Text>{spot2?.name}</Text>
         <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false}>
             <Pressable onPress={() => setSelectedForecast(forecastDay1)} >
                 <View style={styles.card}>
@@ -129,7 +136,7 @@ export default function SpotDetails () {
                         <Text>Speed: {forecastDay3.AvgWindSpd} kts</Text>
                         <Text>Dir: {degToDir(forecastDay2.AvgWindDirection)}</Text>
                     </View>
-                    <Image style={[styles.img, { transform: [{ rotate: `${forecastDay3.AvgWindDirection}deg` }] }]} source={require('@/assets/images/vector-down-arrow-icon.jpg')} />
+                    <Image style={[styles.img, { transform: [{ rotate: `${day3AvgDir}deg` }] }]} source={require('@/assets/images/vector-down-arrow-icon.jpg')} />
                 </View>    
             </Pressable>
 
@@ -138,7 +145,25 @@ export default function SpotDetails () {
         <Text>Selected Forecast:</Text>
         <Text>{currentForecast.date ? `Date: ${currentForecast.date}` : 'None selected'}</Text>
         <ScrollView>
-            {barData.length > 0 ? <BarChart data={barData} /> : <Text>No hourly data</Text>}
+            {barData.length > 0 ? 
+                <BarChart data={barData}
+                    height={240} 
+                    showLine
+                    barWidth={20}
+                    spacing={3}
+
+                    noOfSections={5}
+                    
+                    lineConfig2={{
+                        color: 'blue',
+                        thickness: 2,
+                        curved: true,
+                        startIndex: 0,
+                        hideDataPoints: false,
+                        
+                    }}
+                    /> 
+                    : <Text>No hourly data</Text>}
         </ScrollView>
         <Text>{spot2?.description}</Text>
     </View>
@@ -152,6 +177,7 @@ const styles = StyleSheet.create({
     card: { flexDirection:'row', height: 200, width: 200, backgroundColor: 'white', padding: 20, margin: 20, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,},
     text: {flex: 1, flexDirection: 'column',  justifyContent: 'space-evenly'},
     img: {
+    flex: 1,
     maxWidth: 20,
     aspectRatio: 1,
     backgroundColor: 'transparent',

@@ -1,11 +1,12 @@
+import data from '@/assets/spots.json';
 import { useAuth } from '@/context/AuthProvider';
 import { getUserWeightLocal } from '@/utils/storage';
-import { dirToDeg } from '@/utils/windDir';
-import { degToDir } from '@/utils/windtxt';
+import { degToDir, isSafe } from '@/utils/windtxt';
 import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet } from 'react-native';
 import kiteCalc from './kiteCalc';
 import { Text, View } from './Themed';
+
 
 const SpotItem = ({ spots, onPress, onClose }) => {
 
@@ -17,11 +18,21 @@ const SpotItem = ({ spots, onPress, onClose }) => {
   user?.id && getUserWeightLocal(user.id).then(localWeight => setWeight(localWeight ?? ''));
   }, [spots]); //not the most efficient but it works for now
   //spots.data.current.wind_speed_10m
-
+  const spotId = spots?.id
   const windD = spots?.data.current.wind_direction_10m;
-  const deg = Number.isFinite(dirToDeg(windD)) ? dirToDeg(windD) : 0;
-  const degTxt = degToDir(deg);
+  
+  const degTxt = degToDir(windD);
   const speed = spots?.data.current.wind_speed_10m;
+  const spot  = data.spotInfo.find(item => item.id === spotId);
+  const idealWinds: string[] = spot?.goodwinds ?? [];
+  
+
+  let card = styles.card
+  if(isSafe(degTxt, idealWinds)){
+    card = styles.cardGood
+  } else{
+    card = styles.cardBad
+  }
 
   let kiteText: string;
   if (weight) {
@@ -31,8 +42,8 @@ const SpotItem = ({ spots, onPress, onClose }) => {
   }
 
   return (
-    <Pressable onPress={onPress} style={styles.card} >
-        <Image style={[styles.img, { transform: [{ rotate: `${deg}deg` }] }]} source={require('@/assets/images/vector-down-arrow-icon.jpg')} />
+    <Pressable onPress={onPress} style={card} >
+        <Image style={[styles.img, { transform: [{ rotate: `${windD}deg` }] }]} source={require('@/assets/images/vector-down-arrow-icon.jpg')} />
         <View style={styles.spotInfo}>
           <Text style={styles.infoTxt}>{spots.name}</Text>
           <View style={styles.windInfo}>
@@ -40,7 +51,7 @@ const SpotItem = ({ spots, onPress, onClose }) => {
             <Text style={styles.infoTxt}>{degTxt}</Text>
           </View>
           <View style={styles.windInfo}>
-            <Text>{kiteText}</Text>
+            <Text>Kite Rec: {kiteText}</Text>
             {onClose && <Pressable onPress={onClose}><Text>Close</Text></Pressable>}
           </View>
         </View>
@@ -67,15 +78,50 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
 
   },
+  cardGood: {
+    backgroundColor: 'green',
+    position: 'absolute',
+    bottom: 50,
+    left: 10,
+    right: 10,
+    flexDirection: 'row',
+    flex: 1,
+    borderRadius: 8,
+    height: 100,
+    aspectRatio: 'auto',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+
+  },
+
+  cardBad: {
+    backgroundColor: 'red',
+    position: 'absolute',
+    bottom: 50,
+    left: 10,
+    right: 10,
+    flexDirection: 'row',
+    flex: 1,
+    borderRadius: 8,
+    height: 100,
+    aspectRatio: 'auto',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+
+  },
 
   spotInfo: {
+    backgroundColor: 'transparent',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    width: 250,
 
   },
   windInfo: {
+    backgroundColor: 'transparent',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
+
   },
   img: {
     width: 70,

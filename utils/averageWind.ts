@@ -13,7 +13,33 @@ export function avgWindSpeed(wind: (number | string)[]): number {
   return average;
 };
 
-export function avgWindDir(directions: (number | string)[]): number {
+export function avgWindDir(directions: (number | string)[], speed: (number | string)[]): number {
+    let vXsum = 0;
+    let vYsum = 0;
+    let count = 0;
+    for(let i = 0; i < directions.length; i++){
+       const m = Number(speed[i]);
+       const deg = Number(directions[i]);
+       if(Number.isNaN(deg) || Number.isNaN(speed)){
+            continue;
+       }
+       const rad = deg * (Math.PI / 180);
+       const vX = m * Math.cos(rad);
+       const vY = m * Math.sin(rad);
+       vXsum += vX;
+       vYsum += vY;
+       count += 1;
+    }
+    if(count === 0) return 0;
+   
+    const avgRad = Math.atan2(vXsum/count, vYsum/count);
+    
+     const avgDeg =(avgRad * 180) / Math.PI;
+
+    return (avgDeg + 360) % 360;
+}
+
+export function NewavgWindDir(directions: (number | string)[]): number {
     let sumSin= 0;
     let sumCos = 0;
     let count=0;
@@ -29,7 +55,7 @@ export function avgWindDir(directions: (number | string)[]): number {
     };
 
     if (count === 0) return 0;
-    const avgRad = Math.atan2(sumSin/count, sumCos/count) * (180 / Math.PI);
+    const avgRad = Math.atan2(sumSin/count, sumCos/count);
     const avgDeg = (avgRad * 180) / Math.PI;
 
     return (avgDeg + 360) % 360;
