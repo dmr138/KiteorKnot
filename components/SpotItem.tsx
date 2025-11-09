@@ -42,8 +42,8 @@ const SpotItem = ({ spots, onPress, onClose }) => {
   }
 
   return (
-    <Pressable onPress={onPress} style={styles.card} >
-        <Image style={[styles.img, { transform: [{ rotate: `${deg}deg` }] }]} source={require('@/assets/images/arrow-down.png')} />
+    <Pressable onPress={onPress} style={card} >
+        <Image style={[styles.img, { transform: [{ rotate: `${windD}deg` }] }]} source={require('@/assets/images/arrow-down.png')} />
         <View style={styles.spotInfo}>
           <Text style={styles.infoTxt}>{spots.name}</Text>
           <View style={styles.windInfo}>
