@@ -114,7 +114,7 @@ export default function SpotDetails () {
                         <Text>Speed: {spot2?.data.current.wind_speed_10m} kts</Text>
                         <Text>Dir: {degToDir(spot2?.data.current.wind_direction_10m)}</Text>
                     </View>
-                    <Image style={[styles.img, { transform: [{ rotate: `${deg0}deg` }] }]} source={require('@/assets/images/arrow-down.png')} />
+                    <Image style={[styles.img, { transform: [{ rotate: `${deg0}deg` }] }]} source={require('@/assets/images/DownArrowBlack.png')} />
                 </View>
             </Pressable>
 
@@ -125,7 +125,7 @@ export default function SpotDetails () {
                         <Text>Speed: {forecastDay2.AvgWindSpd} kts</Text>
                         <Text>Dir: {degToDir(forecastDay2.AvgWindDirection)}</Text>
                     </View>
-                    <Image style={[styles.img, { transform: [{ rotate: `${forecastDay2.AvgWindDirection}deg` }] }]} source={require('@/assets/images/arrow-down.png')} />
+                    <Image style={[styles.img, { transform: [{ rotate: `${forecastDay2.AvgWindDirection}deg` }] }]} source={require('@/assets/images/DownArrowBlack.png')} />
                 </View>
             </Pressable>
 
@@ -136,7 +136,7 @@ export default function SpotDetails () {
                         <Text>Speed: {forecastDay3.AvgWindSpd} kts</Text>
                         <Text>Dir: {degToDir(forecastDay2.AvgWindDirection)}</Text>
                     </View>
-                    <Image style={[styles.img, { transform: [{ rotate: `${day3AvgDir}deg` }] }]} source={require('@/assets/images/arrow-down.png')} />
+                    <Image style={[styles.img, { transform: [{ rotate: `${day3AvgDir}deg` }] }]} source={require('@/assets/images/DownArrowBlack.png')} />
                 </View>    
             </Pressable>
 
