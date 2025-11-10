@@ -136,7 +136,7 @@ export default function SpotDetails () {
                         <Text>Speed: {forecastDay3.AvgWindSpd} kts</Text>
                         <Text>Dir: {degToDir(forecastDay2.AvgWindDirection)}</Text>
                     </View>
-                    <Image style={[styles.img, { transform: [{ rotate: `${day3AvgDir}deg` }] }]} source={require('@/assets/images/vector-down-arrow-icon.jpg')} />
+                    <Image style={[styles.img, { transform: [{ rotate: `${day3AvgDir}deg` }] }]} source={require('@/assets/images/arrow-down.png')} />
                 </View>    
             </Pressable>
 
