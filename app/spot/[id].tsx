@@ -108,11 +108,12 @@ export default function SpotDetails () {
     <View>
         <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false}>
             <Pressable onPress={() => setSelectedForecast(forecastDay1)} >
+                
                 <View style={styles.card}>
                     <View style={styles.text}>
-                        <Text>{forecastDay1.date}</Text>
-                        <Text>Speed: {spot2?.data.current.wind_speed_10m} kts</Text>
-                        <Text>Dir: {degToDir(spot2?.data.current.wind_direction_10m)}</Text>
+                        <Text style={{fontSize: 17, fontWeight:'500'}}>{forecastDay1.date}</Text>
+                        <Text style={{fontSize: 17, fontWeight:'500'}}>Speed: {spot2?.data.current.wind_speed_10m} kts</Text>
+                        <Text style={{fontSize: 17, fontWeight:'500'}}>Dir: {degToDir(spot2?.data.current.wind_direction_10m)}</Text>
                     </View>
                     <Image style={[styles.img, { transform: [{ rotate: `${deg0}deg` }] }]} source={require('@/assets/images/arrow-down.png')} />
                 </View>
@@ -121,9 +122,9 @@ export default function SpotDetails () {
             <Pressable onPress={() => setSelectedForecast(forecastDay2)} >
                 <View style={styles.card}>
                     <View style={styles.text}>
-                        <Text>{forecastDay2.date}</Text>
-                        <Text>Speed: {forecastDay2.AvgWindSpd} kts</Text>
-                        <Text>Dir: {degToDir(forecastDay2.AvgWindDirection)}</Text>
+                        <Text style={{fontSize: 17, fontWeight:'500'}}>{forecastDay2.date}</Text>
+                        <Text style={{fontSize: 17, fontWeight:'500'}}>Speed: {forecastDay2.AvgWindSpd} kts</Text>
+                        <Text style={{fontSize: 17, fontWeight:'500'}}>Dir: {degToDir(forecastDay2.AvgWindDirection)}</Text>
                     </View>
                     <Image style={[styles.img, { transform: [{ rotate: `${forecastDay2.AvgWindDirection}deg` }] }]} source={require('@/assets/images/arrow-down.png')} />
                 </View>
@@ -132,11 +133,11 @@ export default function SpotDetails () {
             <Pressable onPress={() => setSelectedForecast(forecastDay3)} >
                 <View style={styles.card}>
                     <View style={styles.text}>
-                        <Text>{forecastDay3.date}</Text>
-                        <Text>Speed: {forecastDay3.AvgWindSpd} kts</Text>
-                        <Text>Dir: {degToDir(forecastDay2.AvgWindDirection)}</Text>
+                        <Text style={{fontSize: 17, fontWeight:'500'}}>{forecastDay3.date}</Text>
+                        <Text style={{fontSize: 17, fontWeight:'500'}}>Speed: {forecastDay3.AvgWindSpd} kts</Text>
+                        <Text style={{fontSize: 17, fontWeight:'500'}}>Dir: {degToDir(forecastDay2.AvgWindDirection)}</Text>
                     </View>
-                    <Image style={[styles.img, { transform: [{ rotate: `${day3AvgDir}deg` }] }]} source={require('@/assets/images/vector-down-arrow-icon.jpg')} />
+                    <Image style={[styles.img, { transform: [{ rotate: `${day3AvgDir} deg` }] }]} source={require('@/assets/images/arrow-down.png')} />
                 </View>    
             </Pressable>
 
@@ -147,7 +148,7 @@ export default function SpotDetails () {
         <ScrollView>
             {barData.length > 0 ? 
                 <BarChart data={barData}
-                    height={240} 
+                    height={350} 
                     showLine
                     barWidth={20}
                     spacing={3}
@@ -174,11 +175,11 @@ export default function SpotDetails () {
 
 const styles = StyleSheet.create({
     container: {flex: 1, alignItems: 'center', justifyContent: 'center' },
-    card: { flexDirection:'row', height: 200, width: 200, backgroundColor: 'white', padding: 20, margin: 20, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,},
-    text: {flex: 1, flexDirection: 'column',  justifyContent: 'space-evenly'},
+    card: { flexDirection:'row', justifyContent:'space-between', height: 150, width: 250, backgroundColor: 'white', padding: 20, margin: 20, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,},
+    text: { flexDirection: 'column', justifyContent: 'space-evenly'},
     img: {
     flex: 1,
-    maxWidth: 20,
+    maxWidth: 70,
     aspectRatio: 1,
     backgroundColor: 'transparent',
     margin: 0,
